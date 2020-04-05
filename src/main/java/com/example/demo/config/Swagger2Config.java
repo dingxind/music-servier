@@ -20,6 +20,5 @@ public class Swagger2Config {
                 .paths(Predicates.not(PathSelectors.regex("/admin/.*")))
                 .paths(Predicates.not(PathSelectors.regex("/error.*")))
                 .build();
-
     }
 }
