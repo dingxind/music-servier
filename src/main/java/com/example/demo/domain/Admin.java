@@ -1,21 +1,15 @@
 package com.example.demo.domain;
 
+import lombok.Data;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+@Data
 public class Admin {
     private Integer id;
 
     private String name;
 
     private String password;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;

@@ -1,9 +1,10 @@
 package com.example.demo.domain;
 
+import lombok.Data;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.Date;
-
+@Data
 public class Consumer {
 
     private Integer id;
@@ -30,14 +31,6 @@ public class Consumer {
 
     private Date updateTime;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
     public String getUsername() {
         return username;
     }
@@ -52,14 +45,6 @@ public class Consumer {
 
     public void setPassword(String password) {
         this.password = password == null ? null : password.trim();
-    }
-
-    public Byte getSex() {
-        return sex;
-    }
-
-    public void setSex(Byte sex) {
-        this.sex = sex;
     }
 
     public String getPhoneNum() {
@@ -78,13 +63,6 @@ public class Consumer {
         this.email = email == null ? null : email.trim();
     }
 
-    public Date getBirth() {
-        return birth;
-    }
-
-    public void setBirth(Date birth) {
-        this.birth = birth;
-    }
 
     public String getIntroduction() {
         return introduction;
@@ -110,21 +88,6 @@ public class Consumer {
         this.avator = avator == null ? null : avator.trim();
     }
 
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
 
     @Override
     public String toString() {

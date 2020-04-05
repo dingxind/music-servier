@@ -1,9 +1,11 @@
 package com.example.demo.domain;
 
+import lombok.Data;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.Date;
 
+@Data
 public class Song {
 
     private Integer id;
@@ -24,21 +26,6 @@ public class Song {
 
     private String url;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getSingerId() {
-        return singerId;
-    }
-
-    public void setSingerId(Integer singerId) {
-        this.singerId = singerId;
-    }
 
     public String getName() {
         return name;
@@ -54,22 +41,6 @@ public class Song {
 
     public void setIntroduction(String introduction) {
         this.introduction = introduction == null ? null : introduction.trim();
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
     }
 
     public String getPic() {
@@ -88,13 +59,6 @@ public class Song {
         this.lyric = lyric == null ? null : lyric.trim();
     }
 
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
 
     @Override
     public String toString() {

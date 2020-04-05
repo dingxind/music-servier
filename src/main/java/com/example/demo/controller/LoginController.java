@@ -3,9 +3,10 @@ package com.example.demo.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.example.demo.domain.Consumer;
 import com.example.demo.service.impl.ConsumerServiceImpl;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -20,16 +21,16 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @RestController
-@Controller
+@Api(tags = "用户接口")
 public class LoginController {
 
     @Autowired
     private ConsumerServiceImpl consumerService;
 
-//    添加用户
-    @ResponseBody
-    @RequestMapping(value = "/api/signup", method = RequestMethod.POST)
-    public Object signup(HttpServletRequest req){
+    //    添加用户
+    @ApiOperation("添加用户")
+    @PostMapping(value = "/api/signup")
+    public Object signup(HttpServletRequest req) {
         JSONObject jsonObject = new JSONObject();
         String username = req.getParameter("username").trim();
         String password = req.getParameter("password").trim();
@@ -41,7 +42,7 @@ public class LoginController {
         String location = req.getParameter("location").trim();
         String avator = req.getParameter("avator").trim();
 
-        if (username.equals("") || username == null){
+        if (username.equals("") || username == null) {
             jsonObject.put("code", 0);
             jsonObject.put("msg", "用户名或密码错误");
             return jsonObject;
@@ -51,21 +52,21 @@ public class LoginController {
         Date myBirth = new Date();
         try {
             myBirth = dateFormat.parse(birth);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         consumer.setUsername(username);
         consumer.setPassword(password);
         consumer.setSex(new Byte(sex));
-        if(phone_num == ""){
+        if (phone_num == "") {
             consumer.setPhoneNum(null);
-        }else{
+        } else {
             consumer.setPhoneNum(phone_num);
         }
 
-        if(email == ""){
+        if (email == "") {
             consumer.setEmail(null);
-        }else{
+        } else {
             consumer.setEmail(email);
         }
         consumer.setBirth(myBirth);
@@ -76,21 +77,21 @@ public class LoginController {
         consumer.setUpdateTime(new Date());
 
         boolean res = consumerService.addUser(consumer);
-        if (res){
+        if (res) {
             jsonObject.put("code", 1);
             jsonObject.put("msg", "登录成功");
             return jsonObject;
-        }else {
+        } else {
             jsonObject.put("code", 0);
             jsonObject.put("msg", "用户名或密码错误");
             return jsonObject;
         }
     }
 
-//    判断是否登录成功
-    @ResponseBody
-    @RequestMapping(value = "/api/loginVerify", method = RequestMethod.POST)
-    public Object loginVerify(HttpServletRequest req, HttpSession session){
+    //    判断是否登录成功
+    @ApiOperation("判断是否登录成功")
+    @PostMapping(value = "/api/loginVerify")
+    public Object loginVerify(HttpServletRequest req, HttpSession session) {
 
         JSONObject jsonObject = new JSONObject();
         String username = req.getParameter("username");
@@ -98,13 +99,13 @@ public class LoginController {
 //        System.out.println(username+"  "+password);
         boolean res = consumerService.veritypasswd(username, password);
 
-        if (res){
+        if (res) {
             jsonObject.put("code", 1);
             jsonObject.put("msg", "登录成功");
             jsonObject.put("userMsg", consumerService.consumerLists(username));
             session.setAttribute("username", username);
             return jsonObject;
-        }else {
+        } else {
             jsonObject.put("code", 0);
             jsonObject.put("msg", "用户名或密码错误");
             return jsonObject;
@@ -112,17 +113,18 @@ public class LoginController {
 
     }
 
-//    删除用户
-    @RequestMapping(value = "/api/deleteUsers", method = RequestMethod.GET)
-    public Object deleteUsers(HttpServletRequest req){
+    //    删除用户
+    @ApiOperation("删除用户")
+    @GetMapping(value = "/api/deleteUsers")
+    public Object deleteUsers(HttpServletRequest req) {
         String id = req.getParameter("id");
         return consumerService.deleteUser(Integer.parseInt(id));
     }
 
-//    更新用户信息
-    @ResponseBody
-    @RequestMapping(value = "/api/updateUserMsgs", method = RequestMethod.POST)
-    public Object updateUserMsgs(HttpServletRequest req){
+    //    更新用户信息
+    @ApiOperation("更新用户信息")
+    @PostMapping(value = "/api/updateUserMsgs")
+    public Object updateUserMsgs(HttpServletRequest req) {
         JSONObject jsonObject = new JSONObject();
         String id = req.getParameter("id").trim();
         String username = req.getParameter("username").trim();
@@ -136,7 +138,7 @@ public class LoginController {
 //        String avator = req.getParameter("avator").trim();
 //        System.out.println(username+"  "+password+"  "+sex+"   "+phone_num+"     "+email+"      "+birth+"       "+introduction+"      "+location);
 
-        if (username.equals("") || username == null){
+        if (username.equals("") || username == null) {
             jsonObject.put("code", 0);
             jsonObject.put("msg", "用户名或密码错误");
             return jsonObject;
@@ -146,7 +148,7 @@ public class LoginController {
         Date myBirth = new Date();
         try {
             myBirth = dateFormat.parse(birth);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         consumer.setId(Integer.parseInt(id));
@@ -162,21 +164,21 @@ public class LoginController {
         consumer.setUpdateTime(new Date());
 
         boolean res = consumerService.updateUserMsg(consumer);
-        if (res){
+        if (res) {
             jsonObject.put("code", 1);
             jsonObject.put("msg", "修改成功");
             return jsonObject;
-        }else {
+        } else {
             jsonObject.put("code", 0);
             jsonObject.put("msg", "修改失败");
             return jsonObject;
         }
     }
 
-//    更新用户头像
-    @ResponseBody
-    @RequestMapping(value = "/api/updateUserImg", method = RequestMethod.POST)
-    public Object updateUserImg(@RequestParam("file") MultipartFile avatorFile, @RequestParam("id")int id){
+    //    更新用户头像
+    @ApiOperation("更新用户头像")
+    @PostMapping(value = "/api/updateUserImg")
+    public Object updateUserImg(@RequestParam("file") MultipartFile avatorFile, @RequestParam("id") int id) {
         JSONObject jsonObject = new JSONObject();
 
         if (avatorFile.isEmpty()) {
@@ -184,36 +186,36 @@ public class LoginController {
             jsonObject.put("msg", "文件上传失败！");
             return jsonObject;
         }
-        String fileName = System.currentTimeMillis()+avatorFile.getOriginalFilename();
-        String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "avatorImages" ;
+        String fileName = System.currentTimeMillis() + avatorFile.getOriginalFilename();
+        String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "avatorImages";
         File file1 = new File(filePath);
-        if (!file1.exists()){
+        if (!file1.exists()) {
             file1.mkdir();
         }
 
         File dest = new File(filePath + System.getProperty("file.separator") + fileName);
-        String storeAvatorPath = "/avatorImages/"+fileName;
+        String storeAvatorPath = "/avatorImages/" + fileName;
         try {
             avatorFile.transferTo(dest);
             Consumer consumer = new Consumer();
             consumer.setId(id);
             consumer.setAvator(storeAvatorPath);
             boolean res = consumerService.updateUserAvator(consumer);
-            if (res){
+            if (res) {
                 jsonObject.put("code", 1);
                 jsonObject.put("avator", storeAvatorPath);
                 jsonObject.put("msg", "上传成功");
                 return jsonObject;
-            }else {
+            } else {
                 jsonObject.put("code", 0);
                 jsonObject.put("msg", "上传失败");
                 return jsonObject;
             }
-        }catch (IOException e){
+        } catch (IOException e) {
             jsonObject.put("code", 0);
-            jsonObject.put("msg", "上传失败"+e.getMessage());
+            jsonObject.put("msg", "上传失败" + e.getMessage());
             return jsonObject;
-        }finally {
+        } finally {
             return jsonObject;
         }
     }
@@ -226,16 +228,18 @@ public class LoginController {
         }
     }
 
-//    返回指定ID的用户
-    @RequestMapping(value = "/commentOfConsumer", method = RequestMethod.GET)
-    public Object toSongs(HttpServletRequest req){
+    //    返回指定ID的用户
+    @ApiOperation("返回指定ID的用户")
+    @GetMapping(value = "/commentOfConsumer")
+    public Object toSongs(HttpServletRequest req) {
         String id = req.getParameter("id");
         return consumerService.conmmentUser(Integer.parseInt(id));
     }
 
-//    返回所有用户
-    @RequestMapping(value = "/AllUsers", method = RequestMethod.GET)
-    public Object AllUsers(){
+    //    返回所有用户
+    @ApiOperation("返回所有用户")
+    @GetMapping(value = "/AllUsers")
+    public Object AllUsers() {
         return consumerService.allUser();
     }
 }

@@ -2,32 +2,29 @@ package com.example.demo.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.example.demo.service.impl.AdminServiceImpl;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @RestController
-@Controller
+@Api(tags = "Admin账号登录")
 public class AdminController {
     @Autowired
     private AdminServiceImpl adminService;
 
-//    判断是否登录成功
-    @ResponseBody
-    @RequestMapping(value = "/api/loginadmin", method = RequestMethod.POST)
+    @PostMapping(value = "/api/loginadmin")
+    @ApiOperation("判断登录是否成功")
     public Object loginadmin(HttpServletRequest req, HttpSession session){
 
         JSONObject jsonObject = new JSONObject();
         String name = req.getParameter("name");
         String password = req.getParameter("password");
-//        System.out.println(name+"  "+password);
-
+        //判断是否有这个用户
         boolean res = adminService.veritypasswd(name, password);
         if (res){
             jsonObject.put("code", 1);

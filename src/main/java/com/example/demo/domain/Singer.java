@@ -1,9 +1,11 @@
 package com.example.demo.domain;
 
+import lombok.Data;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.Date;
 
+@Data
 public class Singer {
 
     private Integer id;
@@ -20,13 +22,6 @@ public class Singer {
 
     private String introduction;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -36,13 +31,6 @@ public class Singer {
         this.name = name == null ? null : name.trim();
     }
 
-    public Byte getSex() {
-        return sex;
-    }
-
-    public void setSex(Byte sex) {
-        this.sex = sex;
-    }
 
     public String getPic() {
         return pic;
@@ -52,13 +40,6 @@ public class Singer {
         this.pic = pic == null ? null : pic.trim();
     }
 
-    public Date getBirth() {
-        return birth;
-    }
-
-    public void setBirth(Date birth) {
-        this.birth = birth;
-    }
 
     public String getLocation() {
         return location;
