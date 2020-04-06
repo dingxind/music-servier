@@ -1,12 +1,13 @@
 package com.example.demo.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.example.demo.domain.Admin;
 import com.example.demo.service.impl.AdminServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -17,11 +18,11 @@ public class AdminController {
 
     @PostMapping(value = "/api/loginadmin")
     @ApiOperation("判断登录是否成功")
-    public Object loginadmin(@RequestParam("name") String name,@RequestParam("password") String password){
-
+    public Object loginadmin(@RequestBody Admin admin){
+//@RequestParam("name") String name,@RequestParam("password") String password
         JSONObject jsonObject = new JSONObject();
-//        String name = admin.getName();
-//        String password = admin.getPassword();
+        String name = admin.getName();
+        String password = admin.getPassword();
         //判断是否有这个用户
         boolean res = adminService.veritypasswd(name, password);
         if (res){
