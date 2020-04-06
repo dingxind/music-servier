@@ -86,33 +86,33 @@ public class CommentController {
     //    更新评论
     @ApiOperation("更新评论")
     @PostMapping(value = "/api/updateCommentMsgs")
-    public Object updateCommentMsgs(HttpServletRequest req) {
+    public Object updateCommentMsgs(@RequestBody Comment comment) {
         JSONObject jsonObject = new JSONObject();
-        String id = req.getParameter("id").trim();
-        String user_id = req.getParameter("userId").trim();
-        String song_id = req.getParameter("songId").trim();
-        String song_list_id = req.getParameter("songListId").trim();
-        String content = req.getParameter("content").trim();
-        String type = req.getParameter("type").trim();
-        String up = req.getParameter("up").trim();
-
-        Comment comment = new Comment();
-        comment.setId(Integer.parseInt(id));
-        comment.setUserId(Integer.parseInt(user_id));
-        if (song_id == "") {
-            comment.setSongId(null);
-        } else {
-            comment.setSongId(Integer.parseInt(song_id));
-        }
-
-        if (song_list_id == "") {
-            comment.setSongListId(null);
-        } else {
-            comment.setSongListId(Integer.parseInt(song_list_id));
-        }
-        comment.setContent(content);
-        comment.setType(new Byte(type));
-        comment.setUp(Integer.parseInt(up));
+//        String id = req.getParameter("id").trim();
+//        String user_id = req.getParameter("userId").trim();
+//        String song_id = req.getParameter("songId").trim();
+//        String song_list_id = req.getParameter("songListId").trim();
+//        String content = req.getParameter("content").trim();
+//        String type = req.getParameter("type").trim();
+//        String up = req.getParameter("up").trim();
+//
+//        Comment comment = new Comment();
+//        comment.setId(Integer.parseInt(id));
+//        comment.setUserId(Integer.parseInt(user_id));
+//        if (song_id == "") {
+//            comment.setSongId(null);
+//        } else {
+//            comment.setSongId(Integer.parseInt(song_id));
+//        }
+//
+//        if (song_list_id == "") {
+//            comment.setSongListId(null);
+//        } else {
+//            comment.setSongListId(Integer.parseInt(song_list_id));
+//        }
+//        comment.setContent(content);
+//        comment.setType(new Byte(type));
+//        comment.setUp(Integer.parseInt(up));
 
         boolean res = commentService.updateCommentMsg(comment);
         if (res) {
