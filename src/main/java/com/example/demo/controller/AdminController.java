@@ -6,10 +6,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 @RestController
 @Api(tags = "Admin账号登录")
@@ -19,17 +17,17 @@ public class AdminController {
 
     @PostMapping(value = "/api/loginadmin")
     @ApiOperation("判断登录是否成功")
-    public Object loginadmin(HttpServletRequest req, HttpSession session){
+    public Object loginadmin(@RequestParam("name") String name,@RequestParam("password") String password){
 
         JSONObject jsonObject = new JSONObject();
-        String name = req.getParameter("name");
-        String password = req.getParameter("password");
+//        String name = admin.getName();
+//        String password = admin.getPassword();
         //判断是否有这个用户
         boolean res = adminService.veritypasswd(name, password);
         if (res){
             jsonObject.put("code", 1);
             jsonObject.put("msg", "登录成功");
-            session.setAttribute("name", name);
+//            session.setAttribute("name", name);
             return jsonObject;
         }else {
             jsonObject.put("code", 0);

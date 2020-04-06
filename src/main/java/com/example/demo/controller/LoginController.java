@@ -115,9 +115,9 @@ public class LoginController {
 
     //    删除用户
     @ApiOperation("删除用户")
-    @GetMapping(value = "/api/deleteUsers")
-    public Object deleteUsers(HttpServletRequest req) {
-        String id = req.getParameter("id");
+    @GetMapping(value = "/api/deleteUsers/{id}")
+    public Object deleteUsers(@PathVariable String id) {
+//        String id = req.getParameter("id");
         return consumerService.deleteUser(Integer.parseInt(id));
     }
 
