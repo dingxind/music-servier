@@ -54,9 +54,9 @@ public class SongListController {
 
     //    删除歌单
     @ApiOperation("删除歌单")
-    @GetMapping(value = "/api/deleteSongLists")
-    public Object deleteSongLists(HttpServletRequest req) {
-        String id = req.getParameter("id");
+    @GetMapping(value = "/api/deleteSongLists/{id}")
+    public Object deleteSongLists(@PathVariable String id) {
+//        String id = req.getParameter("id");
         return songListService.deleteSongList(Integer.parseInt(id));
     }
 
@@ -145,26 +145,26 @@ public class SongListController {
 
     //    返回指定标题对应的歌单
     @ApiOperation("返回指定标题对应的歌单")
-    @GetMapping(value = "/api/songAlbum")
-    public Object songAlbum(HttpServletRequest req) {
-        String title = req.getParameter("title").trim();
-        return songListService.songAlbum(title);
+    @GetMapping(value = "/api/songAlbum/{title}")
+    public Object songAlbum(@PathVariable  String title) {
+//        String title = req.getParameter("title").trim();
+        return songListService.songAlbum(title.trim());
     }
 
     //    返回标题包含文字的歌单
     @ApiOperation("返回标题包含文字的歌单")
-    @GetMapping(value = "/api/songList/likeTitle")
-    public Object likeTitle(HttpServletRequest req) {
-        String title = req.getParameter("title").trim();
-        return songListService.likeTitle('%' + title + '%');
+    @GetMapping(value = "/api/songList/likeTitle/{title}")
+    public Object likeTitle(@PathVariable  String title) {
+//        String title = req.getParameter("title").trim();
+        return songListService.likeTitle('%' + title.trim() + '%');
     }
 
     //    返回指定类型的歌单
     @ApiOperation("返回指定类型的歌单")
-    @GetMapping(value = "/api/songList/likeStyle")
-    public Object likeStyle(HttpServletRequest req) {
-        String style = req.getParameter("style").trim();
-        return songListService.likeStyle(style);
+    @GetMapping(value = "/api/songList/likeStyle/{style}")
+    public Object likeStyle(@PathVariable  String style) {
+//        String style = req.getParameter("style").trim();
+        return songListService.likeStyle(style.trim());
     }
 
     //    返回所有歌单

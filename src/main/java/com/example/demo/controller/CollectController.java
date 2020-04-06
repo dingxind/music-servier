@@ -91,9 +91,9 @@ public class CollectController {
 
     //    删除收藏的歌曲
     @ApiOperation("删除收藏的歌曲")
-    @GetMapping(value = "/api/deleteCollects")
-    public Object deleteCollects(HttpServletRequest req) {
-        String id = req.getParameter("id");
+    @GetMapping(value = "/api/deleteCollects/{id}")
+    public Object deleteCollects(@PathVariable  String id) {
+//        String id = req.getParameter("id");
         return collectService.deleteCollect(Integer.parseInt(id));
     }
 
@@ -135,9 +135,9 @@ public class CollectController {
 
     //    返回的制定用户ID收藏列表
     @ApiOperation("返回的制定用户ID收藏列表")
-    @GetMapping(value = "/myCollection")
-    public Object myCollection(HttpServletRequest req) {
-        String userId = req.getParameter("userId");
+    @GetMapping(value = "/myCollection/{userId}")
+    public Object myCollection(@PathVariable String userId) {
+//        String userId = req.getParameter("userId");
         return collectService.myCollectOfSongs(Integer.parseInt(userId));
     }
 }

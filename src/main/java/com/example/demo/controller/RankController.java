@@ -7,6 +7,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -47,9 +48,9 @@ public class RankController {
 
     //    获取指定歌单的评分
     @ApiOperation("获取指定歌单的评分")
-    @GetMapping(value = "/api/getRank")
-    public Object ranks(HttpServletRequest req) {
-        String songListId = req.getParameter("songListId");
+    @GetMapping(value = "/api/getRank/{songListId}")
+    public Object ranks(@PathVariable String songListId) {
+//        String songListId = req.getParameter("songListId");
         return rankService.selectAverScore(Long.parseLong(songListId));
     }
 }

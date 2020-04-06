@@ -67,9 +67,9 @@ public class SingerController {
 
     //    删除歌手
     @ApiOperation("删除歌手")
-    @GetMapping(value = "/api/deleteSingers")
-    public Object deleteSingers(HttpServletRequest req) {
-        String id = req.getParameter("id");
+    @GetMapping(value = "/api/deleteSingers/{id}")
+    public Object deleteSingers(@PathVariable String id ) {
+//        String id = req.getParameter("id");
         return singerService.deleteSinger(Integer.parseInt(id));
     }
 
@@ -175,17 +175,17 @@ public class SingerController {
 
     //    根据歌手名查找歌手
     @ApiOperation("根据歌手名查找歌手")
-    @GetMapping(value = "/searachSingers")
-    public Object searachSingers(HttpServletRequest req) {
-        String name = req.getParameter("name").trim();
-        return singerService.searachSinger(name);
+    @GetMapping(value = "/searachSingers/{name}")
+    public Object searachSingers(@PathVariable  String name) {
+//        String name = req.getParameter("name").trim();
+        return singerService.searachSinger(name.trim());
     }
 
     //    根据歌手性别查找歌手
     @ApiOperation("根据歌手性别查找歌手")
-    @GetMapping(value = "/api/singer")
-    public Object SingerSex(HttpServletRequest req) {
-        String sex = req.getParameter("sex").trim();
-        return singerService.singerSex(Integer.parseInt(sex));
+    @GetMapping(value = "/api/singer/{sex}")
+    public Object SingerSex(@PathVariable String sex) {
+//        String sex = req.getParameter("sex").trim();
+        return singerService.singerSex(Integer.parseInt(sex.trim()));
     }
 }

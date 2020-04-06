@@ -230,9 +230,9 @@ public class LoginController {
 
     //    返回指定ID的用户
     @ApiOperation("返回指定ID的用户")
-    @GetMapping(value = "/commentOfConsumer")
-    public Object toSongs(HttpServletRequest req) {
-        String id = req.getParameter("id");
+    @GetMapping(value = "/commentOfConsumer/{id}")
+    public Object toSongs(@PathVariable String id) {
+//        String id = req.getParameter("id");
         return consumerService.conmmentUser(Integer.parseInt(id));
     }
 

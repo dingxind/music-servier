@@ -43,9 +43,9 @@ public class ListSongController {
 
     //    删除歌单里的歌曲
     @ApiOperation("删除歌单里的歌曲")
-    @GetMapping(value = "/api/deleteListOfSong")
-    public Object deleteListOfSong(HttpServletRequest req) {
-        String songId = req.getParameter("songId");
+    @GetMapping(value = "/api/deleteListOfSong/{songId}")
+    public Object deleteListOfSong(@PathVariable  String songId) {
+//        String songId = req.getParameter("songId");
         return listSongService.deleteListSong(Integer.parseInt(songId));
     }
 
@@ -84,9 +84,9 @@ public class ListSongController {
 
     //    返回歌单里指定歌单ID的歌曲
     @ApiOperation("返回歌单里指定歌单ID的歌曲")
-    @GetMapping(value = "/listSongOfSingers")
-    public Object toSongList(HttpServletRequest req) {
-        String songListId = req.getParameter("songListId");
+    @GetMapping(value = "/listSongOfSingers/{songListId}")
+    public Object toSongList(@PathVariable String songListId) {
+//        String songListId = req.getParameter("songListId");
         return listSongService.listSongsOfSingers(Integer.parseInt(songListId));
     }
 }

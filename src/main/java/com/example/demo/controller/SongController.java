@@ -196,9 +196,9 @@ public class SongController {
 
     //    删除歌曲
     @ApiOperation("删除歌曲")
-    @GetMapping(value = "/api/deleteSongs")
-    public Object deleteSongs(HttpServletRequest req) {
-        String id = req.getParameter("id");
+    @GetMapping(value = "/api/deleteSongs/{id}")
+    public Object deleteSongs(@PathVariable  String id) {
+//        String id = req.getParameter("id");
         return songService.deleteSong(Integer.parseInt(id));
     }
 
@@ -242,32 +242,32 @@ public class SongController {
 
     //    返回指定歌曲ID的歌曲
     @ApiOperation("返回指定歌曲ID的歌曲")
-    @GetMapping(value = "/listSongsOfSongs")
-    public Object toSongs(HttpServletRequest req) {
-        String id = req.getParameter("id");
+    @GetMapping(value = "/listSongsOfSongs/{id}")
+    public Object toSongs(@PathVariable String id) {
+//        String id = req.getParameter("id");
         return songService.listSongsOfSongs(Integer.parseInt(id));
     }
 
     //    返回指定歌手ID的歌曲
     @ApiOperation("返回指定歌手ID的歌曲")
-    @GetMapping(value = "/listSongs")
-    public Object toSongList(HttpServletRequest req) {
-        String singerId = req.getParameter("singerId");
+    @GetMapping(value = "/listSongs/{singerId}")
+    public Object toSongList(@PathVariable String singerId) {
+//        String singerId = req.getParameter("singerId");
         return songService.listSongsOfSinger(Integer.parseInt(singerId));
     }
 
     //    返回指定歌手名的歌曲
     @ApiOperation("返回指定歌手名的歌曲")
-    @GetMapping(value = "/listSongsOfSearch")
-    public Object toSearchLists(HttpServletRequest req) {
-        String name = req.getParameter("name");
+    @GetMapping(value = "/listSongsOfSearch/{name}")
+    public Object toSearchLists(@PathVariable String name) {
+//        String name = req.getParameter("name");
         return songService.searachSongLists('%' + name + '%');
     }
 
     @ApiOperation("根据歌名查找歌曲")
-    @GetMapping(value = "/api/song")
-    public Object songOfName(HttpServletRequest req) {
-        String name = req.getParameter("name").trim();
-        return songService.songOfName(name);
+    @GetMapping(value = "/api/song/{name}")
+    public Object songOfName(@PathVariable String name) {
+//        String name = req.getParameter("name").trim();
+        return songService.songOfName(name.trim());
     }
 }

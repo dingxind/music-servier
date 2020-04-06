@@ -77,9 +77,9 @@ public class CommentController {
 
     //    删除评论
     @ApiOperation("删除评论")
-    @GetMapping(value = "/api/deleteComments")
-    public Object deleteComments(HttpServletRequest req) {
-        String id = req.getParameter("id");
+    @GetMapping(value = "/api/deleteComments/{id}")
+    public Object deleteComments(@PathVariable String id) {
+//        String id = req.getParameter("id");
         return commentService.deleteComment(Integer.parseInt(id));
     }
 
@@ -135,17 +135,17 @@ public class CommentController {
 
     //    获得指定歌曲ID的评论列表
     @ApiOperation("获得指定歌曲ID的评论列表")
-    @GetMapping(value = "/songComments")
-    public Object songComments(HttpServletRequest req) {
-        String songId = req.getParameter("songId");
+    @GetMapping(value = "/songComments/{songId}")
+    public Object songComments(@PathVariable String songId) {
+//        String songId = req.getParameter("songId");
         return commentService.songComments(Integer.parseInt(songId));
     }
 
     //    获得指定歌单ID的评论列表
     @ApiOperation("获得指定歌单ID的评论列表")
-    @GetMapping(value = "/songListComments")
-    public Object songListComments(HttpServletRequest req) {
-        String songListId = req.getParameter("songListId");
+    @GetMapping(value = "/songListComments/{songListId}")
+    public Object songListComments(@PathVariable String songListId) {
+//        String songListId = req.getParameter("songListId");
         return commentService.songListComments(Integer.parseInt(songListId));
     }
 }
