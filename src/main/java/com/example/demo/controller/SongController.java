@@ -42,13 +42,17 @@ public class SongController {
     //    添加歌曲
     @ApiOperation("添加歌曲")
     @PostMapping(value = "/api/addSong")
-    public Object addSong(HttpServletRequest req, @RequestParam("file") MultipartFile mpfile) {
+    public Object addSong(@RequestParam("singerId") String singer_id,
+                          @RequestParam("name") String name,
+                          @RequestParam("introduction") String introduction,
+                          @RequestParam("lyric") String lyric,
+                          @RequestParam("file") MultipartFile mpfile) {
         JSONObject jsonObject = new JSONObject();
-        String singer_id = req.getParameter("singerId").trim();
-        String name = req.getParameter("name").trim();
-        String introduction = req.getParameter("introduction").trim();
+//        String singer_id = req.getParameter("singerId").trim();
+//        String name = req.getParameter("name").trim();
+//        String introduction = req.getParameter("introduction").trim();
         String pic = "/img/songPic/tubiao.jpg";
-        String lyric = req.getParameter("lyric").trim();
+//        String lyric = req.getParameter("lyric").trim();
 
         if (mpfile.isEmpty()) {
             jsonObject.put("code", 0);
@@ -205,21 +209,21 @@ public class SongController {
     //    更新歌曲信息
     @ApiOperation("更新歌曲信息")
     @PostMapping(value = "/api/updateSongMsgs")
-    public Object updateSongMsgs(HttpServletRequest req) {
+    public Object updateSongMsgs(@RequestBody Song song ) {
         JSONObject jsonObject = new JSONObject();
-        String id = req.getParameter("id").trim();
-        String singer_id = req.getParameter("singerId").trim();
-        String name = req.getParameter("name").trim();
-        String introduction = req.getParameter("introduction").trim();
-        String lyric = req.getParameter("lyric").trim();
-
-        Song song = new Song();
-        song.setId(Integer.parseInt(id));
-        song.setSingerId(Integer.parseInt(singer_id));
-        song.setName(name);
-        song.setIntroduction(introduction);
-        song.setUpdateTime(new Date());
-        song.setLyric(lyric);
+//        String id = req.getParameter("id").trim();
+//        String singer_id = req.getParameter("singerId").trim();
+//        String name = req.getParameter("name").trim();
+//        String introduction = req.getParameter("introduction").trim();
+//        String lyric = req.getParameter("lyric").trim();
+//
+//        Song song = new Song();
+//        song.setId(Integer.parseInt(id));
+//        song.setSingerId(Integer.parseInt(singer_id));
+//        song.setName(name);
+//        song.setIntroduction(introduction);
+//        song.setUpdateTime(new Date());
+//        song.setLyric(lyric);
 
         boolean res = songService.updateSongMsg(song);
         if (res) {
