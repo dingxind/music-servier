@@ -29,29 +29,29 @@ public class SingerController {
     //    添加歌手
     @ApiOperation("添加歌手")
     @PostMapping(value = "/api/addSinger")
-    public Object addSinger(HttpServletRequest req) {
+    public Object addSinger(@RequestBody Singer singer) {
         JSONObject jsonObject = new JSONObject();
-        String name = req.getParameter("name").trim();
-        String sex = req.getParameter("sex").trim();
-        String pic = req.getParameter("pic").trim();
-        String birth = req.getParameter("birth").trim();
-        String location = req.getParameter("location").trim();
-        String introduction = req.getParameter("introduction").trim();
-
-        Singer singer = new Singer();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date myBirth = new Date();
-        try {
-            myBirth = dateFormat.parse(birth);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        singer.setName(name);
-        singer.setSex(new Byte(sex));
-        singer.setPic(pic);
-        singer.setBirth(myBirth);
-        singer.setLocation(location);
-        singer.setIntroduction(introduction);
+//        String name = req.getParameter("name").trim();
+//        String sex = req.getParameter("sex").trim();
+//        String pic = req.getParameter("pic").trim();
+//        String birth = req.getParameter("birth").trim();
+//        String location = req.getParameter("location").trim();
+//        String introduction = req.getParameter("introduction").trim();
+//
+//        Singer singer = new Singer();
+//        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//        Date myBirth = new Date();
+//        try {
+//            myBirth = dateFormat.parse(birth);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        singer.setName(name);
+//        singer.setSex(new Byte(sex));
+//        singer.setPic(pic);
+//        singer.setBirth(myBirth);
+//        singer.setLocation(location);
+//        singer.setIntroduction(introduction);
 
         boolean res = singerService.ifAdd(singer);
         if (res) {
@@ -76,31 +76,31 @@ public class SingerController {
     //    更新歌手信息
     @ApiOperation("更新歌手信息")
     @PostMapping(value = "/api/updateSingerMsgs")
-    public Object updateSingerMsgs(HttpServletRequest req) {
+    public Object updateSingerMsgs(@RequestBody Singer singer ) {
         JSONObject jsonObject = new JSONObject();
-        String id = req.getParameter("id").trim();
-        String name = req.getParameter("name").trim();
-        String sex = req.getParameter("sex").trim();
-        String pic = req.getParameter("pic").trim();
-        String birth = req.getParameter("birth").trim();
-        String location = req.getParameter("location").trim();
-        String introduction = req.getParameter("introduction").trim();
-
-        Singer singer = new Singer();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date myBirth = new Date();
-        try {
-            myBirth = dateFormat.parse(birth);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        singer.setId(Integer.parseInt(id));
-        singer.setName(name);
-        singer.setSex(new Byte(sex));
-        singer.setPic(pic);
-        singer.setBirth(myBirth);
-        singer.setLocation(location);
-        singer.setIntroduction(introduction);
+//        String id = req.getParameter("id").trim();
+//        String name = req.getParameter("name").trim();
+//        String sex = req.getParameter("sex").trim();
+//        String pic = req.getParameter("pic").trim();
+//        String birth = req.getParameter("birth").trim();
+//        String location = req.getParameter("location").trim();
+//        String introduction = req.getParameter("introduction").trim();
+//
+//        Singer singer = new Singer();
+//        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//        Date myBirth = new Date();
+//        try {
+//            myBirth = dateFormat.parse(birth);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        singer.setId(Integer.parseInt(id));
+//        singer.setName(name);
+//        singer.setSex(new Byte(sex));
+//        singer.setPic(pic);
+//        singer.setBirth(myBirth);
+//        singer.setLocation(location);
+//        singer.setIntroduction(introduction);
 
         boolean res = singerService.updateSingerMsg(singer);
         if (res) {
