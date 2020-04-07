@@ -20,14 +20,15 @@ public class ListSongController {
     //    给歌单添加歌曲
     @ApiOperation("给歌单添加歌曲")
     @PostMapping(value = "/api/addListSong")
-    public Object addListSong(HttpServletRequest req) {
+    public Object addListSong(@RequestParam("songId")  String song_id,
+                              @RequestParam("songListId") String song_list_id) {
         JSONObject jsonObject = new JSONObject();
-        String song_id = req.getParameter("songId").trim();
-        String song_list_id = req.getParameter("songListId").trim();
+//        String song_id = req.getParameter("songId").trim();
+//        String song_list_id = req.getParameter("songListId").trim();
 
         ListSong listsong = new ListSong();
-        listsong.setSongId(Integer.parseInt(song_id));
-        listsong.setSongListId(Integer.parseInt(song_list_id));
+        listsong.setSongId(Integer.parseInt(song_id.trim()));
+        listsong.setSongListId(Integer.parseInt(song_list_id.trim()));
 
         boolean res = listSongService.ifAdd(listsong);
         if (res) {
