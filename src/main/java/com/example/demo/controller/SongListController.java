@@ -27,18 +27,18 @@ public class SongListController {
     //    添加歌单
     @ApiOperation("添加歌单")
     @PostMapping(value = "/api/addSongList")
-    public Object addSongList(HttpServletRequest req) {
+    public Object addSongList(@RequestBody SongList songList) {
         JSONObject jsonObject = new JSONObject();
-        String title = req.getParameter("title").trim();
-        String pic = req.getParameter("pic").trim();
-        String introduction = req.getParameter("introduction").trim();
-        String style = req.getParameter("style").trim();
-
-        SongList songList = new SongList();
-        songList.setTitle(title);
-        songList.setPic(pic);
-        songList.setIntroduction(introduction);
-        songList.setStyle(style);
+//        String title = req.getParameter("title").trim();
+//        String pic = req.getParameter("pic").trim();
+//        String introduction = req.getParameter("introduction").trim();
+//        String style = req.getParameter("style").trim();
+//
+//        SongList songList = new SongList();
+//        songList.setTitle(title);
+//        songList.setPic(pic);
+//        songList.setIntroduction(introduction);
+//        songList.setStyle(style);
 
         boolean res = songListService.ifAdd(songList);
         if (res) {
@@ -63,20 +63,20 @@ public class SongListController {
     //    更新歌单信息
     @ApiOperation("更新歌单信息")
     @PostMapping(value = "/api/updateSongListMsgs")
-    public Object updateSongListMsgs(HttpServletRequest req) {
+    public Object updateSongListMsgs(@RequestBody SongList songList) {
         JSONObject jsonObject = new JSONObject();
-        String id = req.getParameter("id").trim();
-        String title = req.getParameter("title").trim();
-        String pic = req.getParameter("pic").trim();
-        String introduction = req.getParameter("introduction").trim();
-        String style = req.getParameter("style").trim();
-
-        SongList songList = new SongList();
-        songList.setId(Integer.parseInt(id));
-        songList.setTitle(title);
-        songList.setPic(pic);
-        songList.setIntroduction(introduction);
-        songList.setStyle(style);
+//        String id = req.getParameter("id").trim();
+//        String title = req.getParameter("title").trim();
+//        String pic = req.getParameter("pic").trim();
+//        String introduction = req.getParameter("introduction").trim();
+//        String style = req.getParameter("style").trim();
+//
+//        SongList songList = new SongList();
+//        songList.setId(Integer.parseInt(id));
+//        songList.setTitle(title);
+//        songList.setPic(pic);
+//        songList.setIntroduction(introduction);
+//        songList.setStyle(style);
 
         boolean res = songListService.updateSongListMsg(songList);
         if (res) {
