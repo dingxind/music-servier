@@ -92,11 +92,13 @@ public class LoginController {
     //    判断是否登录成功
     @ApiOperation("判断是否登录成功")
     @PostMapping(value = "/api/loginVerify")
-    public Object loginVerify(HttpServletRequest req, HttpSession session) {
+    public Object loginVerify(@RequestParam("username") String username,
+                              @RequestParam("password") String password,
+                              HttpSession session) {
 
         JSONObject jsonObject = new JSONObject();
-        String username = req.getParameter("username");
-        String password = req.getParameter("password");
+//        String username = req.getParameter("username");
+//        String password = req.getParameter("password");
 //        System.out.println(username+"  "+password);
         boolean res = consumerService.veritypasswd(username, password);
 
