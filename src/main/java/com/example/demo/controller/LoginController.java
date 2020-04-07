@@ -214,13 +214,7 @@ public class LoginController {
         }
     }
 
-    @Configuration
-    public class MyPicConfig implements WebMvcConfigurer {
-        @Override
-        public void addResourceHandlers(ResourceHandlerRegistry registry) {
-            registry.addResourceHandler("/avatorImages/**").addResourceLocations("file:E:/ideaSpace/music-website/music-server/avatorImages/");
-        }
-    }
+
 
     //    返回指定ID的用户
     @ApiOperation("返回指定ID的用户")

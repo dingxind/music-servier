@@ -158,14 +158,6 @@ public class SingerController {
         }
     }
 
-    @Configuration
-    public class MyPicConfig implements WebMvcConfigurer {
-        @Override
-        public void addResourceHandlers(ResourceHandlerRegistry registry) {
-            registry.addResourceHandler("/img/singerPic/**").addResourceLocations("file:E:/ideaSpace/music-website/music-server/img/singerPic/");
-        }
-    }
-
     //    返回所有歌手
     @ApiOperation("返回所有歌手")
     @GetMapping(value = "/listSingers")

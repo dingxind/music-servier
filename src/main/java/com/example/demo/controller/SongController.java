@@ -189,14 +189,6 @@ public class SongController {
         }
     }
 
-    @Configuration
-    public class MyPicConfig implements WebMvcConfigurer {
-        @Override
-        public void addResourceHandlers(ResourceHandlerRegistry registry) {
-            registry.addResourceHandler("/img/songPic/**").addResourceLocations("file:E:/ideaSpace/music-website/music-server/img/songPic/");
-            registry.addResourceHandler("/song/**").addResourceLocations("file:E:/ideaSpace/music-website/music-server/song/");
-        }
-    }
 
     //    删除歌曲
     @ApiOperation("删除歌曲")

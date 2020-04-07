@@ -135,13 +135,7 @@ public class SongListController {
         }
     }
 
-    @Configuration
-    public class MyPicConfig implements WebMvcConfigurer {
-        @Override
-        public void addResourceHandlers(ResourceHandlerRegistry registry) {
-            registry.addResourceHandler("/img/songListPic/**").addResourceLocations("file:E:/ideaSpace/music-website/music-server/img/songListPic/");
-        }
-    }
+
 
     //    返回指定标题对应的歌单
     @ApiOperation("返回指定标题对应的歌单")
