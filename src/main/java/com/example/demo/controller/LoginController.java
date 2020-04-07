@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.example.demo.domain.Consumer;
 import com.example.demo.service.impl.ConsumerServiceImpl;
+import com.example.demo.utils.ToolUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,33 +31,33 @@ public class LoginController {
     //    添加用户
     @ApiOperation("添加用户")
     @PostMapping(value = "/api/signup")
-    public Object signup(HttpServletRequest req) {
+    public Object signup(@RequestBody  Consumer consumer) {
         JSONObject jsonObject = new JSONObject();
-        String username = req.getParameter("username").trim();
-        String password = req.getParameter("password").trim();
-        String sex = req.getParameter("sex").trim();
-        String phone_num = req.getParameter("phone_num").trim();
-        String email = req.getParameter("email").trim();
-        String birth = req.getParameter("birth").trim();
-        String introduction = req.getParameter("introduction").trim();
-        String location = req.getParameter("location").trim();
-        String avator = req.getParameter("avator").trim();
+        String username = consumer.getUsername();
+//        String password = req.getParameter("password").trim();
+        String sex = consumer.getSex().toString();
+        String phone_num = consumer.getPhoneNum();
+        String email = consumer.getEmail();
+//        String birth = consumer.getBirth().toString();
+//        String introduction = req.getParameter("introduction").trim();
+//        String location = req.getParameter("location").trim();
+//        String avator = req.getParameter("avator").trim();
 
         if (username.equals("") || username == null) {
             jsonObject.put("code", 0);
             jsonObject.put("msg", "用户名或密码错误");
             return jsonObject;
         }
-        Consumer consumer = new Consumer();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date myBirth = new Date();
-        try {
-            myBirth = dateFormat.parse(birth);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        Consumer consumer = new Consumer();
+//        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        Date myBirth = new Date();
+//        try {
+//            myBirth = ToolUtil.StringToDate(birth.trim());
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
         consumer.setUsername(username);
-        consumer.setPassword(password);
+//        consumer.setPassword(password);
         consumer.setSex(new Byte(sex));
         if (phone_num == "") {
             consumer.setPhoneNum(null);
@@ -69,10 +70,10 @@ public class LoginController {
         } else {
             consumer.setEmail(email);
         }
-        consumer.setBirth(myBirth);
-        consumer.setIntroduction(introduction);
-        consumer.setLocation(location);
-        consumer.setAvator(avator);
+//        consumer.setBirth(myBirth);
+//        consumer.setIntroduction(introduction);
+//        consumer.setLocation(location);
+//        consumer.setAvator(avator);
         consumer.setCreateTime(new Date());
         consumer.setUpdateTime(new Date());
 
@@ -124,17 +125,17 @@ public class LoginController {
     //    更新用户信息
     @ApiOperation("更新用户信息")
     @PostMapping(value = "/api/updateUserMsgs")
-    public Object updateUserMsgs(HttpServletRequest req) {
+    public Object updateUserMsgs(@RequestBody  Consumer consumer) {
         JSONObject jsonObject = new JSONObject();
-        String id = req.getParameter("id").trim();
-        String username = req.getParameter("username").trim();
-        String password = req.getParameter("password").trim();
-        String sex = req.getParameter("sex").trim();
-        String phone_num = req.getParameter("phone_num").trim();
-        String email = req.getParameter("email").trim();
-        String birth = req.getParameter("birth").trim();
-        String introduction = req.getParameter("introduction").trim();
-        String location = req.getParameter("location").trim();
+//        String id = req.getParameter("id").trim();
+          String username = consumer.getUsername();
+//        String password = req.getParameter("password").trim();
+//        String sex = req.getParameter("sex").trim();
+//        String phone_num = req.getParameter("phone_num").trim();
+//        String email = req.getParameter("email").trim();
+//          String birth = consumer.getBirth().toString();
+//        String introduction = req.getParameter("introduction").trim();
+//        String location = req.getParameter("location").trim();
 //        String avator = req.getParameter("avator").trim();
 //        System.out.println(username+"  "+password+"  "+sex+"   "+phone_num+"     "+email+"      "+birth+"       "+introduction+"      "+location);
 
@@ -143,23 +144,16 @@ public class LoginController {
             jsonObject.put("msg", "用户名或密码错误");
             return jsonObject;
         }
-        Consumer consumer = new Consumer();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date myBirth = new Date();
-        try {
-            myBirth = dateFormat.parse(birth);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        consumer.setId(Integer.parseInt(id));
-        consumer.setUsername(username);
-        consumer.setPassword(password);
-        consumer.setSex(new Byte(sex));
-        consumer.setPhoneNum(phone_num);
-        consumer.setEmail(email);
-        consumer.setBirth(myBirth);
-        consumer.setIntroduction(introduction);
-        consumer.setLocation(location);
+//        Consumer consumer = new Consumer();
+//        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//        Date myBirth = new Date();
+//        try {
+//            myBirth = dateFormat.parse(birth);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+
+//        consumer.setBirth(myBirth);
 //        consumer.setAvator(avator);
         consumer.setUpdateTime(new Date());
 
