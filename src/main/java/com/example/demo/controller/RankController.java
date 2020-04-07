@@ -6,10 +6,7 @@ import com.example.demo.service.impl.RankServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -23,16 +20,16 @@ public class RankController {
     //    提交评分
     @ApiOperation("提交评分")
     @PostMapping(value = "/api/pushRank")
-    public Object signup(HttpServletRequest req) {
+    public Object signup(@RequestBody Rank rank) {
         JSONObject jsonObject = new JSONObject();
-        String songListId = req.getParameter("songListId").trim();
-        String consumerId = req.getParameter("consumerId").trim();
-        String score = req.getParameter("score").trim();
-
-        Rank rank = new Rank();
-        rank.setSongListId(Long.parseLong(songListId));
-        rank.setConsumerId(Long.parseLong(consumerId));
-        rank.setScore(Integer.parseInt(score));
+//        String songListId = req.getParameter("songListId").trim();
+//        String consumerId = req.getParameter("consumerId").trim();
+//        String score = req.getParameter("score").trim();
+//
+//        Rank rank = new Rank();
+//        rank.setSongListId(Long.parseLong(songListId));
+//        rank.setConsumerId(Long.parseLong(consumerId));
+//        rank.setScore(Integer.parseInt(score));
 
         boolean res = rankService.insert(rank);
         if (res) {
