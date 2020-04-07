@@ -21,7 +21,7 @@ public interface CollectMapper {
 
     int addCollection(Collect collect);
 
-    int existSongId(Integer songId);
+    int existSongId(Integer songId,Integer userId);
 
     int updateCollectMsg(Collect collect);
 

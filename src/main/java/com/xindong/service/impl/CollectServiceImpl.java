@@ -19,8 +19,8 @@ public class CollectServiceImpl implements CollectService {
     }
 
     @Override
-    public boolean existSongId(Integer songId) {
-        return collectMapper.existSongId(songId)>0 ? true:false;
+    public boolean existSongId(Integer songId, Integer userId) {
+        return collectMapper.existSongId(songId,userId)>0 ? true:false;
     }
 
     @Override

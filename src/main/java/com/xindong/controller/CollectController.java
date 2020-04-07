@@ -1,11 +1,13 @@
 package com.xindong.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.xindong.common.Result;
 import com.xindong.entities.Collect;
 import com.xindong.service.impl.CollectServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,78 +23,51 @@ public class CollectController {
     //    添加收藏的歌曲
     @PostMapping(value = "/api/addCollections")
     @ApiOperation(" 添加收藏的歌曲")
-    public Object addCollections(HttpServletRequest req) {
+    public Result addCollections(@RequestBody Collect collect) {
 
-        JSONObject jsonObject = new JSONObject();
-        String user_id = req.getParameter("userId");
-        String type = req.getParameter("type");
-        String song_id = req.getParameter("songId");
-        String song_list_id = req.getParameter("songListId");
-
-        Collect collect = new Collect();
-        collect.setUserId(Integer.parseInt(user_id));
-        collect.setType(new Byte(type));
-        if (new Byte(type) == 0) {
-            collect.setSongId(Integer.parseInt(song_id));
-        } else if (new Byte(type) == 1) {
-            collect.setSongListId(Integer.parseInt(song_list_id));
+        if (collect.getType() == 0) {
+            collect.setSongId(collect.getSongId());
+        } else if (collect.getType() == 1) {
+            collect.setSongListId(collect.getSongListId());
         }
         collect.setCreateTime(new Date());
         boolean res = collectService.addCollection(collect);
         if (res) {
-            jsonObject.put("code", 1);
-            jsonObject.put("msg", "收藏成功");
-            return jsonObject;
+            return Result.ok().msg("收藏成功").code(1);
         } else {
-            jsonObject.put("code", 0);
-            jsonObject.put("msg", "收藏失败");
-            return jsonObject;
+            return Result.ok().msg("收藏失败").code(0);
         }
     }
 
     @PostMapping(value = "/api/collectionList")
-    public Object collectionList(HttpServletRequest req) {
-
-        JSONObject jsonObject = new JSONObject();
-        String user_id = req.getParameter("userId");
-        String type = req.getParameter("type");
-        String song_id = req.getParameter("songId");
-        String song_list_id = req.getParameter("songListId");
-
-        if (song_id == "") {
-            jsonObject.put("code", 0);
-            jsonObject.put("msg", "收藏失败");
-            return jsonObject;
-        } else if (collectService.existSongId(Integer.parseInt(song_id))) {
-            jsonObject.put("code", 2);
-            jsonObject.put("msg", "已收藏");
-            return jsonObject;
-        }
-        Collect collect = new Collect();
-        collect.setUserId(Integer.parseInt(user_id));
-        collect.setType(new Byte(type));
-        if (new Byte(type) == 0) {
-            collect.setSongId(Integer.parseInt(song_id));
-        } else if (new Byte(type) == 1) {
-            collect.setSongListId(Integer.parseInt(song_list_id));
-        }
-        collect.setCreateTime(new Date());
-        boolean res = collectService.addCollection(collect);
-        if (res) {
-            jsonObject.put("code", 1);
-            jsonObject.put("msg", "收藏成功");
-            return jsonObject;
-        } else {
-            jsonObject.put("code", 0);
-            jsonObject.put("msg", "收藏失败");
-            return jsonObject;
+    public Result collectionList(@RequestBody Collect collect) {
+        try {
+            if (ObjectUtils.isEmpty(collect.getSongId())) {
+                return Result.error().code(0).msg("收藏失败");
+            } else if (collectService.existSongId(collect.getSongId(), collect.getUserId())) {
+                return Result.error().code(2).msg("已收藏");
+            }
+            if (collect.getType() == 0) {
+                collect.setSongId(collect.getSongId());
+            } else if (collect.getType() == 1) {
+                collect.setSongListId(collect.getSongListId());
+            }
+            collect.setCreateTime(new Date());
+            boolean res = collectService.addCollection(collect);
+            if (res) {
+                return Result.ok().code(1).msg("收藏成功");
+            } else {
+                return Result.error().code(0).msg("收藏失败");
+            }
+        } catch(Exception e) {
+            throw  e;
         }
     }
 
     //    删除收藏的歌曲
     @ApiOperation("删除收藏的歌曲")
     @GetMapping(value = "/api/deleteCollects/{id}")
-    public Object deleteCollects(@PathVariable  String id) {
+    public Object deleteCollects(@PathVariable String id) {
 //        String id = req.getParameter("id");
         return collectService.deleteCollect(Integer.parseInt(id));
     }

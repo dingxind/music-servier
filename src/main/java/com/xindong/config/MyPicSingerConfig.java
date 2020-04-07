@@ -13,6 +13,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
         @Override
         public void addResourceHandlers(ResourceHandlerRegistry registry) {
-            registry.addResourceHandler("/img/singerPic/**").addResourceLocations("file:"+url+"/music-servier/img/singerPic/");
+            registry.addResourceHandler("/img/singerPic/**").addResourceLocations("file:"+url+"/music-server/img/singerPic/");
         }
     }

@@ -32,7 +32,7 @@
   </select>
 
   <select id="existSongId" resultType="java.lang.Integer">
- SELECT count(*) FROM collect where song_id = #{songId, jdbcType=INTEGER} ;
+ SELECT count(*) FROM collect where song_id = #{0}  and user_id = #{1};
    </select>
 
   <select id="allCollect" resultMap="BaseResultMap">

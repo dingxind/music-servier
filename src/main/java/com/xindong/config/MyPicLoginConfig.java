@@ -12,6 +12,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
     String url;
         @Override
         public void addResourceHandlers(ResourceHandlerRegistry registry) {
-            registry.addResourceHandler("/avatorImages/**").addResourceLocations("file:"+url+"/music-servier/avatorImages/");
+            registry.addResourceHandler("/avatorImages/**").addResourceLocations("file:"+url+"/music-server/avatorImages/");
         }
     }
