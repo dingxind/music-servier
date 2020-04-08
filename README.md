@@ -1,4 +1,4 @@
-# music-servier
+# music-server
 
 1、post方法restfull风格
 2、统一返回结果
