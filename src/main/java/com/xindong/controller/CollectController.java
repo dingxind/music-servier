@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @Api(tags = "用户收藏接口")
@@ -19,25 +20,6 @@ public class CollectController {
 
     @Autowired
     private CollectServiceImpl collectService;
-
-    //    添加收藏的歌曲
-    @PostMapping(value = "/api/addCollections")
-    @ApiOperation(" 添加收藏的歌曲")
-    public Result addCollections(@RequestBody Collect collect) {
-
-        if (collect.getType() == 0) {
-            collect.setSongId(collect.getSongId());
-        } else if (collect.getType() == 1) {
-            collect.setSongListId(collect.getSongListId());
-        }
-        collect.setCreateTime(new Date());
-        boolean res = collectService.addCollection(collect);
-        if (res) {
-            return Result.ok().msg("收藏成功").code(1);
-        } else {
-            return Result.ok().msg("收藏失败").code(0);
-        }
-    }
 
     @PostMapping(value = "/api/collectionList")
     public Result collectionList(@RequestBody Collect collect) {
@@ -47,11 +29,7 @@ public class CollectController {
             } else if (collectService.existSongId(collect.getSongId(), collect.getUserId())) {
                 return Result.error().code(2).msg("已收藏");
             }
-            if (collect.getType() == 0) {
-                collect.setSongId(collect.getSongId());
-            } else if (collect.getType() == 1) {
-                collect.setSongListId(collect.getSongListId());
-            }
+
             collect.setCreateTime(new Date());
             boolean res = collectService.addCollection(collect);
             if (res) {
@@ -59,17 +37,23 @@ public class CollectController {
             } else {
                 return Result.error().code(0).msg("收藏失败");
             }
-        } catch(Exception e) {
-            throw  e;
+        } catch (Exception e) {
+            throw e;
         }
     }
 
     //    删除收藏的歌曲
     @ApiOperation("删除收藏的歌曲")
-    @GetMapping(value = "/api/deleteCollects/{id}")
-    public Object deleteCollects(@PathVariable String id) {
-//        String id = req.getParameter("id");
-        return collectService.deleteCollect(Integer.parseInt(id));
+    @GetMapping(value = "/api/deleteCollects/{id}/{userId}")
+    public Result deleteCollects(@PathVariable String id, @PathVariable String userId) {
+        Result result = null;
+        boolean collect = collectService.deleteCollect(Integer.parseInt(id), Integer.parseInt(userId));
+        if (collect == false) {
+            result = Result.error().msg("删除失败").data(false);
+        } else {
+            result = Result.ok().msg("删除成功").data(true);
+        }
+        return result;
     }
 
     //    更新收藏
@@ -84,7 +68,7 @@ public class CollectController {
 //        String song_list_id = req.getParameter("songListId").trim();
 
         Collect collect = new Collect();
-        collect.setId(Integer.parseInt(id));
+        collect.setId(id);
         collect.setUserId(Integer.parseInt(user_id));
         collect.setType(new Byte(type));
         collect.setSongId(Integer.parseInt(song_id));
@@ -104,15 +88,16 @@ public class CollectController {
     //    返回所有用户收藏列表
     @ApiOperation("返回所有用户收藏列表")
     @GetMapping(value = "/allCollects")
-    public Object allCollects() {
-        return collectService.allCollect();
+    public Result allCollects() {
+        List<Collect> collects = collectService.allCollect();
+        return Result.ok().data(collects);
     }
 
     //    返回的制定用户ID收藏列表
     @ApiOperation("返回的制定用户ID收藏列表")
     @GetMapping(value = "/myCollection/{userId}")
-    public Object myCollection(@PathVariable String userId) {
-//        String userId = req.getParameter("userId");
-        return collectService.myCollectOfSongs(Integer.parseInt(userId));
+    public Result myCollection(@PathVariable String userId) {
+        List<Collect> collects = collectService.myCollectOfSongs(Integer.parseInt(userId));
+        return Result.ok().data(collects);
     }
 }

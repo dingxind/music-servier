@@ -1,31 +1,32 @@
 package com.xindong.mappers;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.xindong.entities.Collect;
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
-@Repository
-public interface CollectMapper {
-    int deleteByPrimaryKey(Integer id);
+@Mapper
+public interface CollectMapper extends BaseMapper<Collect> {
+//    int deleteByPrimaryKey(Integer id);
 
-    int insert(Collect record);
+//    int insert(Collect record);
 
-    int insertSelective(Collect record);
+//    int insertSelective(Collect record);
 
     Collect selectByPrimaryKey(Integer id);
 
-    int updateByPrimaryKeySelective(Collect record);
+//    int updateByPrimaryKeySelective(Collect record);
 
     int updateByPrimaryKey(Collect record);
 
-    int addCollection(Collect collect);
+//    int addCollection(Collect collect);
 
     int existSongId(Integer songId,Integer userId);
 
     int updateCollectMsg(Collect collect);
 
-    int deleteCollect(Integer id);
+//    int deleteCollect(Integer id);
 
     List<Collect> allCollect();
 

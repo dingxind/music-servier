@@ -1,12 +1,15 @@
 package com.xindong.entities;
 
+import com.alibaba.fastjson.JSON;
 import lombok.Data;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
-public class Comment {
+public class Comment implements Serializable {
+    private static final long serialVersionUID = 1L;
     private Integer id;
 
     private Integer userId;
@@ -23,16 +26,8 @@ public class Comment {
 
     private Integer up;
 
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content == null ? null : content.trim();
-    }
     @Override
     public String toString() {
-        return ToStringBuilder.reflectionToString(this);
+        return JSON.toJSONString(this);
     }
 }

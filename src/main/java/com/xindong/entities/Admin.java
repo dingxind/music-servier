@@ -3,8 +3,11 @@ package com.xindong.entities;
 import lombok.Data;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import java.io.Serializable;
+
 @Data
-public class Admin {
+public class Admin  implements Serializable  {
+    private static final long serialVersionUID = 1L;
     private Integer id;
 
     private String name;
