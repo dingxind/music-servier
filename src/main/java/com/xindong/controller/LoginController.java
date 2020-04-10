@@ -1,6 +1,8 @@
 package com.xindong.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.sun.org.apache.regexp.internal.RE;
+import com.xindong.common.Result;
 import com.xindong.entities.Consumer;
 import com.xindong.service.impl.ConsumerServiceImpl;
 import io.swagger.annotations.Api;
@@ -9,10 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @Api(tags = "用户接口")
@@ -24,87 +28,56 @@ public class LoginController {
     //    添加用户
     @ApiOperation("添加用户")
     @PostMapping(value = "/api/signup")
-    public Object signup(@RequestBody Consumer consumer) {
-        JSONObject jsonObject = new JSONObject();
+    public Result signup(@RequestBody Consumer consumer) {
         String username = consumer.getUsername();
-//        String password = req.getParameter("password").trim();
         String sex = consumer.getSex().toString();
         String phone_num = consumer.getPhoneNum();
         String email = consumer.getEmail();
-//        String birth = consumer.getBirth().toString();
-//        String introduction = req.getParameter("introduction").trim();
-//        String location = req.getParameter("location").trim();
-//        String avator = req.getParameter("avator").trim();
 
         if (username.equals("") || username == null) {
-            jsonObject.put("code", 0);
-            jsonObject.put("msg", "用户名或密码错误");
-            return jsonObject;
+            return Result.error().code(0).msg("用户名或密码错误");
         }
-//        Consumer consumer = new Consumer();
-//        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        Date myBirth = new Date();
-//        try {
-//            myBirth = ToolUtil.StringToDate(birth.trim());
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
         consumer.setUsername(username);
-//        consumer.setPassword(password);
         consumer.setSex(new Byte(sex));
         if (phone_num == "") {
             consumer.setPhoneNum(null);
         } else {
             consumer.setPhoneNum(phone_num);
         }
-
         if (email == "") {
             consumer.setEmail(null);
         } else {
             consumer.setEmail(email);
         }
-//        consumer.setBirth(myBirth);
-//        consumer.setIntroduction(introduction);
-//        consumer.setLocation(location);
-//        consumer.setAvator(avator);
         consumer.setCreateTime(new Date());
         consumer.setUpdateTime(new Date());
 
         boolean res = consumerService.addUser(consumer);
         if (res) {
-            jsonObject.put("code", 1);
-            jsonObject.put("msg", "登录成功");
-            return jsonObject;
+            return  Result.ok().code(1).msg("登录成功");
         } else {
-            jsonObject.put("code", 0);
-            jsonObject.put("msg", "用户名或密码错误");
-            return jsonObject;
+            return Result.error().code(0).msg("用户名或密码错误");
         }
     }
 
     //    判断是否登录成功
     @ApiOperation("判断是否登录成功")
     @PostMapping(value = "/api/loginVerify")
-    public Object loginVerify(@RequestParam("username") String username,
+    public Result loginVerify(@RequestParam("username") String username,
                               @RequestParam("password") String password,
-                              HttpSession session) {
+                              HttpServletRequest request) {
 
-        JSONObject jsonObject = new JSONObject();
-//        String username = req.getParameter("username");
-//        String password = req.getParameter("password");
-//        System.out.println(username+"  "+password);
         boolean res = consumerService.veritypasswd(username, password);
 
         if (res) {
-            jsonObject.put("code", 1);
-            jsonObject.put("msg", "登录成功");
-            jsonObject.put("userMsg", consumerService.consumerLists(username));
+//            jsonObject.put("code", 1);
+//            jsonObject.put("msg", "登录成功");
+//            jsonObject.put("userMsg", consumerService.consumerLists(username));
+            HttpSession session = request.getSession();
             session.setAttribute("username", username);
-            return jsonObject;
+            return  Result.ok().code(1).msg("登录成功").data("userMsg",consumerService.consumerLists(username));
         } else {
-            jsonObject.put("code", 0);
-            jsonObject.put("msg", "用户名或密码错误");
-            return jsonObject;
+            return  Result.ok().code(0).msg("用户名或密码错误");
         }
 
     }
@@ -112,68 +85,37 @@ public class LoginController {
     //    删除用户
     @ApiOperation("删除用户")
     @GetMapping(value = "/api/deleteUsers/{id}")
-    public Object deleteUsers(@PathVariable String id) {
-//        String id = req.getParameter("id");
-        return consumerService.deleteUser(Integer.parseInt(id));
+    public Result deleteUsers(@PathVariable String id) {
+        boolean deleteUser = consumerService.deleteUser(Integer.parseInt(id));
+        return Result.ok().data(deleteUser);
     }
 
     //    更新用户信息
     @ApiOperation("更新用户信息")
     @PostMapping(value = "/api/updateUserMsgs")
-    public Object updateUserMsgs(@RequestBody  Consumer consumer) {
-        JSONObject jsonObject = new JSONObject();
-//        String id = req.getParameter("id").trim();
+    public Result updateUserMsgs(@RequestBody  Consumer consumer) {
           String username = consumer.getUsername();
-//        String password = req.getParameter("password").trim();
-//        String sex = req.getParameter("sex").trim();
-//        String phone_num = req.getParameter("phone_num").trim();
-//        String email = req.getParameter("email").trim();
-//          String birth = consumer.getBirth().toString();
-//        String introduction = req.getParameter("introduction").trim();
-//        String location = req.getParameter("location").trim();
-//        String avator = req.getParameter("avator").trim();
-//        System.out.println(username+"  "+password+"  "+sex+"   "+phone_num+"     "+email+"      "+birth+"       "+introduction+"      "+location);
 
         if (username.equals("") || username == null) {
-            jsonObject.put("code", 0);
-            jsonObject.put("msg", "用户名或密码错误");
-            return jsonObject;
+            return  Result.error().code(0).msg("用户名或密码错误");
         }
-//        Consumer consumer = new Consumer();
-//        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//        Date myBirth = new Date();
-//        try {
-//            myBirth = dateFormat.parse(birth);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-
-//        consumer.setBirth(myBirth);
-//        consumer.setAvator(avator);
         consumer.setUpdateTime(new Date());
 
         boolean res = consumerService.updateUserMsg(consumer);
         if (res) {
-            jsonObject.put("code", 1);
-            jsonObject.put("msg", "修改成功");
-            return jsonObject;
+            return  Result.ok().code(1).msg("修改成功");
         } else {
-            jsonObject.put("code", 0);
-            jsonObject.put("msg", "修改失败");
-            return jsonObject;
+            return Result.error().code(0).msg("修改失败");
         }
     }
 
     //    更新用户头像
     @ApiOperation("更新用户头像")
     @PostMapping(value = "/api/updateUserImg")
-    public Object updateUserImg(@RequestParam("file") MultipartFile avatorFile, @RequestParam("id") int id) {
-        JSONObject jsonObject = new JSONObject();
+    public Result updateUserImg(@RequestParam("file") MultipartFile avatorFile, @RequestParam("id") int id) {
 
         if (avatorFile.isEmpty()) {
-            jsonObject.put("code", 0);
-            jsonObject.put("msg", "文件上传失败！");
-            return jsonObject;
+            return  Result.error().code(0).msg("文件上传失败！");
         }
         String fileName = System.currentTimeMillis() + avatorFile.getOriginalFilename();
         String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "avatorImages";
@@ -191,21 +133,12 @@ public class LoginController {
             consumer.setAvator(storeAvatorPath);
             boolean res = consumerService.updateUserAvator(consumer);
             if (res) {
-                jsonObject.put("code", 1);
-                jsonObject.put("avator", storeAvatorPath);
-                jsonObject.put("msg", "上传成功");
-                return jsonObject;
+                return  Result.ok().code(1).avator(storeAvatorPath).msg("上传成功");
             } else {
-                jsonObject.put("code", 0);
-                jsonObject.put("msg", "上传失败");
-                return jsonObject;
+                return Result.error().code(0).msg("上传失败");
             }
         } catch (IOException e) {
-            jsonObject.put("code", 0);
-            jsonObject.put("msg", "上传失败" + e.getMessage());
-            return jsonObject;
-        } finally {
-            return jsonObject;
+            return Result.error().code(0).msg("上传失败" + e.getMessage());
         }
     }
 
@@ -214,15 +147,16 @@ public class LoginController {
     //    返回指定ID的用户
     @ApiOperation("返回指定ID的用户")
     @GetMapping(value = "/commentOfConsumer/{id}")
-    public Object toSongs(@PathVariable String id) {
-//        String id = req.getParameter("id");
-        return consumerService.conmmentUser(Integer.parseInt(id));
+    public Result toSongs(@PathVariable String id) {
+        List<Consumer> consumers = consumerService.conmmentUser(Integer.parseInt(id));
+        return Result.ok().data(consumers);
     }
 
     //    返回所有用户
     @ApiOperation("返回所有用户")
     @GetMapping(value = "/AllUsers")
-    public Object AllUsers() {
-        return consumerService.allUser();
+    public Result AllUsers() {
+        List<Consumer> consumers = consumerService.allUser();
+        return Result.ok().data(consumers);
     }
 }

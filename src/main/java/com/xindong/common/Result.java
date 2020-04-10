@@ -6,7 +6,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.util.HashMap;
-import java.util.Map;
 
 @Data
 @ApiModel(value = "全局统一返回结果")
@@ -20,6 +19,9 @@ public class Result {
 
     @ApiModelProperty(value = "返回消息")
     private String msg;
+
+    @ApiModelProperty(value = "返回地址")
+    private String avator;
 
     @ApiModelProperty(value = "返回数据")
     private Object data ;
@@ -60,6 +62,11 @@ public class Result {
         return this;
     }
 
+    public Result avator(String avator){
+        this.setAvator(avator);
+        return this;
+    }
+
     public Result code(Integer code){
         this.setCode(code);
         return this;
@@ -67,6 +74,13 @@ public class Result {
 
     public Result data(Object t){
         this.setData(t);
+        return this;
+    }
+
+    public Result data(String key,Object value){
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put(key,value);
+        this.setData(hashMap);
         return this;
     }
 }

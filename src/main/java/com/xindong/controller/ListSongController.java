@@ -1,6 +1,7 @@
 package com.xindong.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.xindong.common.Result;
 import com.xindong.entities.ListSong;
 import com.xindong.service.impl.ListSongServiceImpl;
 import io.swagger.annotations.Api;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @RestController
 @Api(tags = "我的歌单")
@@ -20,25 +22,17 @@ public class ListSongController {
     //    给歌单添加歌曲
     @ApiOperation("给歌单添加歌曲")
     @PostMapping(value = "/api/addListSong")
-    public Object addListSong(@RequestParam("songId")  String song_id,
+    public Result addListSong(@RequestParam("songId")  String song_id,
                               @RequestParam("songListId") String song_list_id) {
-        JSONObject jsonObject = new JSONObject();
-//        String song_id = req.getParameter("songId").trim();
-//        String song_list_id = req.getParameter("songListId").trim();
-
         ListSong listsong = new ListSong();
         listsong.setSongId(Integer.parseInt(song_id.trim()));
         listsong.setSongListId(Integer.parseInt(song_list_id.trim()));
 
         boolean res = listSongService.ifAdd(listsong);
-        if (res) {
-            jsonObject.put("code", 1);
-            jsonObject.put("msg", "修改成功");
-            return jsonObject;
+        if (res) {;
+            return  Result.ok().code(1).msg("修改成功");
         } else {
-            jsonObject.put("code", 0);
-            jsonObject.put("msg", "修改失败");
-            return jsonObject;
+            return  Result.error().code(0).msg("修改失败");
         }
     }
 
@@ -46,48 +40,36 @@ public class ListSongController {
     @ApiOperation("删除歌单里的歌曲")
     @GetMapping(value = "/api/deleteListOfSong/{songId}")
     public Object deleteListOfSong(@PathVariable  String songId) {
-//        String songId = req.getParameter("songId");
-        return listSongService.deleteListSong(Integer.parseInt(songId));
+        boolean deleteListSong = listSongService.deleteListSong(Integer.parseInt(songId));
+        return Result.ok().data(deleteListSong);
     }
 
     //    更新歌单里面的歌曲信息
     @ApiOperation("更新歌单里面的歌曲信息")
     @PostMapping(value = "/api/updateListSongMsgs")
-    public Object updateListSongMsgs(HttpServletRequest req) {
-        JSONObject jsonObject = new JSONObject();
-        String id = req.getParameter("id").trim();
-        String song_id = req.getParameter("songId").trim();
-        String song_list_id = req.getParameter("songListId").trim();
-
-        ListSong listsong = new ListSong();
-        listsong.setId(Integer.parseInt(id));
-        listsong.setSongId(Integer.parseInt(song_id));
-        listsong.setSongListId(Integer.parseInt(song_list_id));
+    public Result updateListSongMsgs(@RequestBody ListSong listsong) {
 
         boolean res = listSongService.updateListSongMsg(listsong);
         if (res) {
-            jsonObject.put("code", 1);
-            jsonObject.put("msg", "修改成功");
-            return jsonObject;
+            return  Result.ok().msg("修改成功").code(1);
         } else {
-            jsonObject.put("code", 0);
-            jsonObject.put("msg", "修改失败");
-            return jsonObject;
+            return  Result.error().code(0).msg("修改失败");
         }
     }
 
     //    返回歌单里包含的所有歌曲
     @ApiOperation("返回歌单里包含的所有歌曲")
     @GetMapping(value = "/allListSongs")
-    public Object allListSongs() {
-        return listSongService.allListSong();
+    public Result allListSongs() {
+        List<ListSong> songs = listSongService.allListSong();
+        return Result.ok().data(songs);
     }
 
     //    返回歌单里指定歌单ID的歌曲
     @ApiOperation("返回歌单里指定歌单ID的歌曲")
     @GetMapping(value = "/listSongOfSingers/{songListId}")
-    public Object toSongList(@PathVariable String songListId) {
-//        String songListId = req.getParameter("songListId");
-        return listSongService.listSongsOfSingers(Integer.parseInt(songListId));
+    public Result toSongList(@PathVariable String songListId) {
+        List<ListSong> songs = listSongService.listSongsOfSingers(Integer.parseInt(songListId));
+        return Result.ok().data(songs);
     }
 }
