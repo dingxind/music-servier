@@ -5,6 +5,7 @@ import com.xindong.entities.Consumer;
 import com.xindong.service.ConsumerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,8 +16,15 @@ public class ConsumerServiceImpl implements ConsumerService {
     private ConsumerMapper consumerMapper;
 
     @Override
+    @Transactional
     public boolean addUser(Consumer consumer) {
-        return consumerMapper.addUser(consumer) >0 ?true:false;
+        int insert = 0;
+        try{
+         insert = consumerMapper.insert(consumer);
+        } catch(Exception e) {
+            throw e;
+        }
+        return insert >0 ?true:false;
     }
 
     @Override

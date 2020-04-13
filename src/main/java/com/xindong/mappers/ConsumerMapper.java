@@ -1,22 +1,15 @@
 package com.xindong.mappers;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.xindong.entities.Consumer;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface ConsumerMapper {
-
-    int deleteByPrimaryKey(Integer id);
+public interface ConsumerMapper extends BaseMapper<Consumer> {
 
     int insert(Consumer record);
-
-    int insertSelective(Consumer record);
-
-    Consumer selectByPrimaryKey(Integer id);
-
-    int updateByPrimaryKeySelective(Consumer record);
 
     int updateByPrimaryKey(Consumer record);
 

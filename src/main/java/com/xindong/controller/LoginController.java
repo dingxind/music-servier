@@ -30,31 +30,17 @@ public class LoginController {
     @PostMapping(value = "/api/signup")
     public Result signup(@RequestBody Consumer consumer) {
         String username = consumer.getUsername();
-        String sex = consumer.getSex().toString();
-        String phone_num = consumer.getPhoneNum();
-        String email = consumer.getEmail();
 
         if (username.equals("") || username == null) {
             return Result.error().code(0).msg("用户名或密码错误");
         }
-        consumer.setUsername(username);
-        consumer.setSex(new Byte(sex));
-        if (phone_num == "") {
-            consumer.setPhoneNum(null);
-        } else {
-            consumer.setPhoneNum(phone_num);
-        }
-        if (email == "") {
-            consumer.setEmail(null);
-        } else {
-            consumer.setEmail(email);
-        }
+
         consumer.setCreateTime(new Date());
         consumer.setUpdateTime(new Date());
 
         boolean res = consumerService.addUser(consumer);
         if (res) {
-            return  Result.ok().code(1).msg("登录成功");
+            return  Result.ok().code(1).msg("注册成功");
         } else {
             return Result.error().code(0).msg("用户名或密码错误");
         }
