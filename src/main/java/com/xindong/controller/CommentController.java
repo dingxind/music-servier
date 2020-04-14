@@ -39,7 +39,6 @@ public class CommentController {
     @ApiOperation("点赞")
     @PostMapping(value = "/api/postUp")
     public Result postUp(@RequestBody Comment comment) {
-
         boolean res = commentService.updateCommentMsg(comment);
         if (res) {
             return Result.ok().code(1).msg("点赞成功");
@@ -60,7 +59,6 @@ public class CommentController {
     @ApiOperation("更新评论")
     @PostMapping(value = "/api/updateCommentMsgs")
     public Result updateCommentMsgs(@RequestBody Comment comment) {
-
         boolean res = commentService.updateCommentMsg(comment);
         if (res) {
             return Result.ok().code(1).msg("修改成功");

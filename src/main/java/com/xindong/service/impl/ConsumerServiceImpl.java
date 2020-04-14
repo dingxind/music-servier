@@ -16,7 +16,7 @@ public class ConsumerServiceImpl implements ConsumerService {
     private ConsumerMapper consumerMapper;
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public boolean addUser(Consumer consumer) {
         int insert = 0;
         try{
@@ -34,7 +34,6 @@ public class ConsumerServiceImpl implements ConsumerService {
 
     @Override
     public boolean updateUserAvator(Consumer consumer) {
-
         return consumerMapper.updateUserAvator(consumer) >0 ?true:false;
     }
 

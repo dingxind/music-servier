@@ -163,9 +163,9 @@ public class SongController {
 
         boolean res = songService.updateSongMsg(song);
         if (res) {
-            return  Result.ok().code(1).msg("修改成功");
+            return  Result.ok().code(1).msg("修改成功").data(res);
         } else {
-            return  Result.error().code(0).msg("修改失败");
+            return  Result.error().code(0).msg("修改失败").data(res);
         }
     }
 

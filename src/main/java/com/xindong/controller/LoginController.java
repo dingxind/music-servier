@@ -1,7 +1,5 @@
 package com.xindong.controller;
 
-import com.alibaba.fastjson.JSONObject;
-import com.sun.org.apache.regexp.internal.RE;
 import com.xindong.common.Result;
 import com.xindong.entities.Consumer;
 import com.xindong.service.impl.ConsumerServiceImpl;

@@ -46,7 +46,7 @@
     <!--<include refid="Base_Column_List" />-->
     <!--,-->
     <!--<include refid="Blob_Column_List" />-->
-    from song
+    from song order by  create_time desc
   </select>
 
   <select id="listSongsOfSinger" resultMap="BaseResultMap" parameterType="java.lang.Integer">
