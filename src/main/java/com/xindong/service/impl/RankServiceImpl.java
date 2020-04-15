@@ -4,14 +4,17 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.xindong.mappers.RankMapper;
 import com.xindong.entities.Rank;
 import com.xindong.service.RankService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class RankServiceImpl implements RankService {
 
     @Autowired
@@ -37,7 +40,8 @@ public class RankServiceImpl implements RankService {
                 sum += i;
             }
         } catch (Exception e) {
-            throw e;
+            log.error("[计算评分]-[计算评分失败]");
+            return 0;
         }
         return sum / ranks.size();
     }
@@ -47,12 +51,14 @@ public class RankServiceImpl implements RankService {
      * @param rank
      * @return
      */
+    @Transactional
     public boolean insert(Rank rank) {
         int insert = 0;
         try {
             insert = rankMapper.insert(rank);
         } catch (Exception e) {
-            return false;
+            log.error("[添加评价]-[评价失败]");
+            throw e;
         }
         return insert > 0 ? true : false;
     }

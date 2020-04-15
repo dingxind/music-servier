@@ -1,11 +1,14 @@
 package com.xindong.entities;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 @Data
 public class SongList {
 
+    @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
     private String title;

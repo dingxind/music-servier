@@ -4,57 +4,127 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.xindong.mappers.SingerMapper;
 import com.xindong.entities.Singer;
 import com.xindong.service.SingerService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class SingerServiceImpl implements SingerService{
+@Slf4j
+public class SingerServiceImpl implements SingerService {
 
     @Autowired
     private SingerMapper singerMapper;
 
-    @Override
+    /**
+     * 更新歌手
+     *
+     * @param singer
+     * @return
+     */
     public boolean updateSingerMsg(Singer singer) {
-        return singerMapper.updateSingerMsg(singer) >0 ?true:false;
+        log.info("[更新歌手]-[调用mybatis方法]");
+        return singerMapper.updateSingerMsg(singer) > 0 ? true : false;
     }
 
-    @Override
+    /**
+     * 更新歌手图片
+     *
+     * @param singer
+     * @return
+     */
     public boolean updateSingerImg(Singer singer) {
-
-        return singerMapper.updateSingerImg(singer) >0 ?true:false;
+        log.info("[更新歌手图片]-[调用mybatis方法]");
+        return singerMapper.updateSingerImg(singer) > 0 ? true : false;
     }
 
-    @Override
+    /**
+     * 删除歌手
+     *
+     * @param id
+     * @return
+     */
     public boolean deleteSinger(Integer id) {
-        int i = singerMapper.deleteById(id);
-        return i >0 ?true:false;
+        int i = 0;
+        try {
+            i = singerMapper.deleteById(id);
+        } catch (Exception e) {
+            log.error("[删除歌手]-[删除失败]");
+            return false;
+        }
+        return i > 0 ? true : false;
     }
 
-    @Override
+    /**
+     * 查询列表
+     *
+     * @return
+     */
     public List<Singer> listSingers() {
-
-        return singerMapper.selectList(null);
+        List<Singer> singers = new ArrayList<>();
+        try {
+            singers = singerMapper.selectList(null);
+        } catch (Exception e) {
+            log.error("[查询列表]-[查询失败]");
+            return null;
+        }
+        return singers;
     }
 
-    @Override
-    public boolean ifAdd(Singer singer)  {
-
-        return singerMapper.insert(singer) > 0 ? true : false;
+    /**
+     * 添加歌手
+     *
+     * @param singer
+     * @return
+     */
+    public boolean ifAdd(Singer singer) {
+        int insert = 0;
+        try {
+            insert = singerMapper.insert(singer);
+        } catch (Exception e) {
+            log.error("[添加歌手]-[添加失败]");
+            return false;
+        }
+        return insert > 0 ? true : false;
     }
 
-    @Override
+    /**
+     * 根据名字进行模糊查询
+     *
+     * @param name
+     * @return
+     */
     public List<Singer> searachSinger(String name) {
-        QueryWrapper<Singer> wrapper = new QueryWrapper<>();
-        wrapper.like("name",name);
-        return singerMapper.selectList(wrapper);
+        List<Singer> singers = new ArrayList<>();
+        try {
+            QueryWrapper<Singer> wrapper = new QueryWrapper<>();
+            wrapper.like("name", name);
+            singers = singerMapper.selectList(wrapper);
+        } catch (Exception e) {
+            log.error("[根据名字进行模糊查询]-[查询失败]");
+            return null;
+        }
+        return singers;
     }
 
-    @Override
+    /**
+     * 根据性别查询列表
+     *
+     * @param sex
+     * @return
+     */
     public List<Singer> singerSex(Integer sex) {
-        QueryWrapper<Singer> wrapper = new QueryWrapper<>();
-        wrapper.eq("sex",sex);
-        return singerMapper.selectList(wrapper);
+        List<Singer> singers = new ArrayList<>();
+        try{
+            QueryWrapper<Singer> wrapper = new QueryWrapper<>();
+            wrapper.eq("sex", sex);
+            singers = singerMapper.selectList(wrapper);
+        } catch(Exception e) {
+            log.error("[根据名字进行模糊查询]-[查询失败]");
+            return null;
+        }
+        return singers;
     }
 }

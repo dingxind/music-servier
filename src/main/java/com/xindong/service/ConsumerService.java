@@ -16,8 +16,6 @@ public interface ConsumerService {
 
     boolean veritypasswd(String username, String password);
 
-    boolean ifAdd (Consumer consumer);
-
     boolean deleteUser(Integer id);
 
     List<Consumer> allUser();

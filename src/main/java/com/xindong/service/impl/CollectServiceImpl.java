@@ -7,6 +7,7 @@ import com.xindong.service.CollectService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,7 @@ public class CollectServiceImpl implements CollectService {
      * @param collect
      * @return
      */
+    @Transactional
     public boolean addCollection(Collect collect) {
         int insert = 0;
         try {
@@ -98,6 +100,7 @@ public class CollectServiceImpl implements CollectService {
             collects = collectMapper.selectList(wrapper);
         } catch (Exception e) {
             log.error("[查询所有收藏]-[查询失败]");
+            return null;
         }
         return collects;
     }
@@ -116,6 +119,7 @@ public class CollectServiceImpl implements CollectService {
             collects = collectMapper.selectList(wrapper);
         } catch (Exception e) {
             log.error("[用户收藏的歌曲]-[查询失败]");
+            return null;
         }
         return collects;
     }

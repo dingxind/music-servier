@@ -6,6 +6,7 @@ import com.xindong.service.impl.ConsumerServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -44,6 +45,16 @@ public class LoginController {
         }
     }
 
+    @ApiOperation("验证用户名是否重复")
+    @GetMapping(value = "/api/repeatName/{username}")
+    public  Result repeatName(@PathVariable String username){
+        List<Consumer> consumers = consumerService.consumerLists(username);
+        if(!CollectionUtils.isEmpty(consumers)){
+            return Result.ok().code(1).data(consumers);
+        }
+        return Result.error().code(0).data(consumers);
+    }
+
     //    判断是否登录成功
     @ApiOperation("判断是否登录成功")
     @PostMapping(value = "/api/loginVerify")
@@ -51,12 +62,10 @@ public class LoginController {
                               @RequestParam("password") String password,
                               HttpServletRequest request) {
 
+
         boolean res = consumerService.veritypasswd(username, password);
 
         if (res) {
-//            jsonObject.put("code", 1);
-//            jsonObject.put("msg", "登录成功");
-//            jsonObject.put("userMsg", consumerService.consumerLists(username));
             HttpSession session = request.getSession();
             session.setAttribute("username", username);
             return  Result.ok().code(1).msg("登录成功").data("userMsg",consumerService.consumerLists(username));
