@@ -42,7 +42,6 @@ public class CollectController {
         }
     }
 
-    //    删除收藏的歌曲
     @ApiOperation("删除收藏的歌曲")
     @GetMapping(value = "/api/deleteCollects/{id}/{userId}")
     public Result deleteCollects(@PathVariable String id, @PathVariable String userId) {
@@ -56,7 +55,6 @@ public class CollectController {
         return result;
     }
 
-    //    更新收藏
     @PostMapping(value = "/api/updateCollectMsgs")
     @ApiOperation("更新收藏")
     public Object updateCollectMsgs(HttpServletRequest req) {
@@ -65,7 +63,6 @@ public class CollectController {
         String user_id = req.getParameter("userId").trim();
         String type = req.getParameter("type").trim();
         String song_id = req.getParameter("songId").trim();
-//        String song_list_id = req.getParameter("songListId").trim();
 
         Collect collect = new Collect();
         collect.setId(id);
@@ -85,7 +82,6 @@ public class CollectController {
         }
     }
 
-    //    返回所有用户收藏列表
     @ApiOperation("返回所有用户收藏列表")
     @GetMapping(value = "/allCollects")
     public Result allCollects() {
@@ -93,7 +89,6 @@ public class CollectController {
         return Result.ok().data(collects);
     }
 
-    //    返回的制定用户ID收藏列表
     @ApiOperation("返回的制定用户ID收藏列表")
     @GetMapping(value = "/myCollection/{userId}")
     public Result myCollection(@PathVariable String userId) {

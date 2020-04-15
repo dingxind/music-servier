@@ -1,5 +1,6 @@
 package com.xindong.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.xindong.mappers.ConsumerMapper;
 import com.xindong.entities.Consumer;
 import com.xindong.service.ConsumerService;
@@ -34,49 +35,60 @@ public class ConsumerServiceImpl implements ConsumerService {
 
     @Override
     public boolean updateUserAvator(Consumer consumer) {
+
         return consumerMapper.updateUserAvator(consumer) >0 ?true:false;
     }
 
     @Override
     public boolean existUser(String username) {
-        return consumerMapper.existUsername(username)>0 ? true:false;
+        QueryWrapper<Consumer> wrapper = new QueryWrapper<>();
+        wrapper.eq("username",username);
+        Integer integer = consumerMapper.selectCount(wrapper);
+        return integer>0 ? true:false;
     }
 
     @Override
     public boolean veritypasswd(String username, String password) {
-
-        return consumerMapper.verifyPassword(username, password)>0?true:false;
+        QueryWrapper<Consumer> wrapper = new QueryWrapper<>();
+        wrapper.eq("username",username).eq("password",password);
+        Integer integer = consumerMapper.selectCount(wrapper);
+        return integer>0?true:false;
     }
 
 //    删除用户
     @Override
     public boolean deleteUser(Integer id) {
-        return consumerMapper.deleteUser(id) >0 ?true:false;
+        int i = consumerMapper.deleteById(id);
+        return i >0 ?true:false;
     }
 
     @Override
-    public List<Consumer> allUser()
-    {
-        return consumerMapper.allUser();
+    public List<Consumer> allUser(){
+        QueryWrapper<Consumer> wrapper = new QueryWrapper<>();
+        wrapper.orderByDesc("create_time");
+        List<Consumer> consumers = consumerMapper.selectList(wrapper);
+        return consumers;
     }
 
     @Override
-    public boolean ifAdd(Consumer consumer)
-    {
-
-        return consumerMapper.addUser(consumer) > 0?true:false;
+    public boolean ifAdd(Consumer consumer) {
+        int insert = consumerMapper.insert(consumer);
+        return insert > 0?true:false;
     }
 
     @Override
     public List<Consumer> conmmentUser(Integer id) {
-
-        return consumerMapper.conmmentUser(id);
+        QueryWrapper<Consumer> wrapper = new QueryWrapper<>();
+        wrapper.eq("id",id);
+        List<Consumer> consumers = consumerMapper.selectList(wrapper);
+        return consumers;
     }
 
     @Override
-    public List<Consumer> consumerLists(String username)
-    {
-
-        return consumerMapper.consumerLists(username);
+    public List<Consumer> consumerLists(String username) {
+        QueryWrapper<Consumer> wrapper = new QueryWrapper<>();
+        wrapper.eq("username",username);
+        List<Consumer> consumers = consumerMapper.selectList(wrapper);
+        return consumers;
     }
 }

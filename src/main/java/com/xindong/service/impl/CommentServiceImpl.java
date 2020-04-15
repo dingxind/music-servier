@@ -1,5 +1,6 @@
 package com.xindong.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.xindong.mappers.CommentMapper;
 import com.xindong.entities.Comment;
 import com.xindong.service.CommentService;
@@ -15,7 +16,9 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     public boolean addComment(Comment comment) {
-        return commentMapper.addComment(comment) > 0 ? true:false;
+
+        int insert = commentMapper.insert(comment);
+        return insert > 0 ? true:false;
     }
 
     @Override
@@ -26,26 +29,29 @@ public class CommentServiceImpl implements CommentService{
 //    删除评论
     @Override
     public boolean deleteComment(Integer id) {
-        return commentMapper.deleteComment(id) >0 ?true:false;
+        int i = commentMapper.deleteById(id);
+        return i >0 ?true:false;
     }
 
     @Override
-    public List<Comment> songListComment()
-    {
-        return commentMapper.songListComment();
+    public List<Comment> songListComment() {
+        List<Comment> comments = commentMapper.selectList(null);
+        return comments;
     }
 
     @Override
-    public List<Comment> songComments(Integer songId)
-
-    {
-        return commentMapper.songComments(songId);
+    public List<Comment> songComments(Integer songId) {
+        QueryWrapper<Comment> wrapper = new QueryWrapper<>();
+        wrapper.eq("song_id",songId);
+        List<Comment> comments = commentMapper.selectList(wrapper);
+        return comments;
     }
 
     @Override
-    public List<Comment> songListComments(Integer songListId)
-
-    {
-        return commentMapper.songListComments(songListId);
+    public List<Comment> songListComments(Integer songListId) {
+        QueryWrapper<Comment> wrapper = new QueryWrapper<>();
+        wrapper.eq("song_list_id",songListId);
+        List<Comment> comments = commentMapper.selectList(wrapper);
+        return comments;
     }
 }

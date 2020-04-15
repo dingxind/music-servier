@@ -1,5 +1,6 @@
 package com.xindong.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.xindong.mappers.SongMapper;
 import com.xindong.entities.Song;
 import com.xindong.service.SongService;
@@ -15,16 +16,15 @@ public class SongServiceImpl implements SongService {
     private SongMapper songMapper;
 
     @Override
-    public List<Song> listSongs()
-    {
-        return songMapper.listSongs();
+    public List<Song> listSongs() {
+        QueryWrapper<Song> wrapper = new QueryWrapper<>();
+        wrapper.orderByDesc("create_time");
+        return songMapper.selectList(wrapper);
     }
 
     @Override
-    public boolean ifAdd(Song song)
-    {
-
-        return songMapper.insertSelective(song) > 0?true:false;
+    public boolean ifAdd(Song song) {
+        return songMapper.insert(song) > 0?true:false;
     }
 
     @Override
@@ -46,34 +46,34 @@ public class SongServiceImpl implements SongService {
 
     @Override
     public boolean deleteSong(Integer id) {
-        return songMapper.deleteSong(id) >0 ?true:false;
+        return songMapper.deleteById(id) >0 ?true:false;
     }
 
     @Override
-    public List<Song> listSongsOfSinger(Integer singerId)
-
-    {
-        return songMapper.listSongsOfSinger(singerId);
+    public List<Song> listSongsOfSinger(Integer singerId) {
+        QueryWrapper<Song> wrapper = new QueryWrapper<>();
+        wrapper.eq("singer_id",singerId);
+        return songMapper.selectList(wrapper);
     }
 
     @Override
-    public List<Song> listSongsOfSongs(Integer id)
-
-    {
-        return songMapper.listSongsOfSongs(id);
+    public List<Song> listSongsOfSongs(Integer id) {
+        QueryWrapper<Song> wrapper = new QueryWrapper<>();
+        wrapper.eq("id",id);
+        return songMapper.selectList(wrapper);
     }
 
     @Override
-    public List<Song> searachSongLists(String name)
-
-    {
-        return songMapper.searachSongLists(name);
+    public List<Song> searachSongLists(String name) {
+        QueryWrapper<Song> wrapper = new QueryWrapper<>();
+        wrapper.like("name",name);
+        return songMapper.selectList(wrapper);
     }
 
     @Override
-    public List<Song> songOfName(String name)
-
-    {
-        return songMapper.songOfName(name);
+    public List<Song> songOfName(String name) {
+        QueryWrapper<Song> wrapper = new QueryWrapper<>();
+        wrapper.eq("name",name);
+        return songMapper.selectList(wrapper);
     }
 }

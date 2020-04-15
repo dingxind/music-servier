@@ -1,5 +1,6 @@
 package com.xindong.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.xindong.mappers.SingerMapper;
 import com.xindong.entities.Singer;
 import com.xindong.service.SingerService;
@@ -27,32 +28,33 @@ public class SingerServiceImpl implements SingerService{
 
     @Override
     public boolean deleteSinger(Integer id) {
-        return singerMapper.deleteSinger(id) >0 ?true:false;
+        int i = singerMapper.deleteById(id);
+        return i >0 ?true:false;
     }
 
     @Override
-    public List<Singer> listSingers()
-    {
-        return singerMapper.listSingers();
+    public List<Singer> listSingers() {
+
+        return singerMapper.selectList(null);
     }
 
     @Override
     public boolean ifAdd(Singer singer)  {
 
-        return singerMapper.insertSelective(singer) > 0 ? true : false;
+        return singerMapper.insert(singer) > 0 ? true : false;
     }
 
     @Override
-    public List<Singer> searachSinger(String name)
-
-    {
-        return singerMapper.searachSinger(name);
+    public List<Singer> searachSinger(String name) {
+        QueryWrapper<Singer> wrapper = new QueryWrapper<>();
+        wrapper.like("name",name);
+        return singerMapper.selectList(wrapper);
     }
 
     @Override
-    public List<Singer> singerSex(Integer sex)
-
-    {
-        return singerMapper.singerSex(sex);
+    public List<Singer> singerSex(Integer sex) {
+        QueryWrapper<Singer> wrapper = new QueryWrapper<>();
+        wrapper.eq("sex",sex);
+        return singerMapper.selectList(wrapper);
     }
 }
