@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,12 @@ public class ConsumerServiceImpl implements ConsumerService {
     public boolean addUser(Consumer consumer) {
         int insert = 0;
         try {
+            if(ObjectUtils.isEmpty(consumer.getPhoneNum())){
+                consumer.setPhoneNum(null);
+            }
+            if(ObjectUtils.isEmpty(consumer.getEmail())){
+                consumer.setEmail(null);
+            }
             insert = consumerMapper.insert(consumer);
         } catch (Exception e) {
             log.error("[添加用户]-[添加失败]");
