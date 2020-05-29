@@ -4,15 +4,19 @@ import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
-@Data
+
+@Getter
+@Setter
 public class Consumer implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -33,6 +37,7 @@ public class Consumer implements Serializable {
 
     private String phoneNum;
 
+    @Email
     private String email;
 
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")

@@ -1,0 +1,22 @@
+spring:
+  server:
+    MaxFileSize: 50MB
+    MaxRequestSize: 50MB
+  jackson:
+    date-format: yyyy-MM
+    time-zone: GMT+8
+  datasource:
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/tp_music?useUnicode=true& characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&
+      useLegacyDatetimeCode=false& serverTimezone=UTC& zeroDateTimeBehavior=convertToNull
+    username: root
+server:
+  port: 8888
+file:
+  #D:/vscodeSpace
+  #E:/ideaSpace/music-website
+  url: D:/vscodeSpace
+mybatis-plus:
+  typeAliasesPackage: com.xindong.entities
+  mapper-locations: classpath:mapper/*.xml

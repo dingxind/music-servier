@@ -1,13 +1,10 @@
 package com.xindong.mappers;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.fasterxml.jackson.databind.ser.Serializers;
 import com.xindong.entities.Song;
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.Mapper;
 
-import java.util.List;
-
-@Repository
+@Mapper
 public interface SongMapper extends BaseMapper<Song> {
 
     int updateSongMsg(Song record);

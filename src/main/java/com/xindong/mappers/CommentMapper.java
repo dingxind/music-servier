@@ -2,11 +2,10 @@ package com.xindong.mappers;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.xindong.entities.Comment;
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.Mapper;
 
-import java.util.List;
 
-@Repository
+@Mapper
 public interface CommentMapper extends BaseMapper<Comment> {
 
     int updateByPrimaryKey(Comment record);

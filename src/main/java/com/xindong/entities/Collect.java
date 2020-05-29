@@ -1,14 +1,17 @@
 package com.xindong.entities;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Data;
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.Date;
-@Data
+
+@Getter
+@Setter
 @TableName(value = "collect")
 public class Collect implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -29,7 +32,7 @@ public class Collect implements Serializable {
 
     @Override
     public String toString() {
-        return ToStringBuilder.reflectionToString(this);
+        return JSON.toJSONString(this);
     }
 
 }

@@ -26,4 +26,11 @@ public class GlobalExceptionHandler {
         e.printStackTrace();
         return Result.setResult(ResultCodeEnum.BAD_SQL_GRAMMAR);
     }
+
+    @ExceptionHandler(MyException.class)
+    @ResponseBody
+    public Result error(MyException e) {
+        e.printStackTrace();
+        return Result.error().msg(e.getMessage()).code(e.getCode());
+    }
 }

@@ -2,10 +2,12 @@ package com.xindong.entities;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-@Data
+@Getter
+@Setter
 public class SongList {
 
     @TableId(value = "id", type = IdType.AUTO)
@@ -18,31 +20,6 @@ public class SongList {
     private String style;
 
     private String introduction;
-
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title == null ? null : title.trim();
-    }
-
-    public String getPic() {
-        return pic;
-    }
-
-    public void setPic(String pic) {
-        this.pic = pic == null ? null : pic.trim();
-    }
-
-    public String getIntroduction() {
-        return introduction;
-    }
-
-    public void setIntroduction(String introduction) {
-        this.introduction = introduction == null ? null : introduction.trim();
-    }
 
     @Override
     public String toString() {

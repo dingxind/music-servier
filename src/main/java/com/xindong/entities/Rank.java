@@ -1,14 +1,17 @@
 package com.xindong.entities;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Data;
+import com.baomidou.mybatisplus.annotation.TableName;;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 
-@Data
+@Getter
+@Setter
 @TableName("`rank`")
 public class Rank implements Serializable {
 
@@ -24,4 +27,8 @@ public class Rank implements Serializable {
     private Long consumerId;
 
     private Integer score;
+
+    public String toString(){
+        return JSON.toJSONString(this);
+    }
 }

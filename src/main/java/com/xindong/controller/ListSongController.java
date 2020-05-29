@@ -1,6 +1,5 @@
 package com.xindong.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.xindong.common.Result;
 import com.xindong.entities.ListSong;
 import com.xindong.service.impl.ListSongServiceImpl;
@@ -9,7 +8,6 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController

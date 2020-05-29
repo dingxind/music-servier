@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,7 @@ public class RankServiceImpl implements RankService {
 
     /**
      * 计算评分
+     *
      * @param songListId
      * @return
      */
@@ -48,18 +50,27 @@ public class RankServiceImpl implements RankService {
 
     /**
      * 添加评价
+     *
      * @param rank
      * @return
      */
-    @Transactional
-    public boolean insert(Rank rank) {
+    public Integer insert(Rank rank) {
         int insert = 0;
         try {
+            List<Rank> ranks = rankMapper.selectList(new QueryWrapper<Rank>().lambda()
+                    .eq(Rank::getSongListId, rank.getSongListId())
+                    .eq(Rank::getConsumerId, rank.getConsumerId()));
+            if (!CollectionUtils.isEmpty(ranks)) {
+                insert = 2;
+                return insert;
+            }
+
             insert = rankMapper.insert(rank);
+
         } catch (Exception e) {
             log.error("[添加评价]-[评价失败]");
             throw e;
         }
-        return insert > 0 ? true : false;
+        return insert;
     }
 }

@@ -1,11 +1,15 @@
 package com.xindong.entities;
 
-import lombok.Data;
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import com.alibaba.fastjson.JSON;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 
-@Data
+@Getter
+@Setter
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class Admin  implements Serializable  {
 
     private static final long serialVersionUID = 1L;
@@ -34,6 +38,6 @@ public class Admin  implements Serializable  {
 
     @Override
     public String toString() {
-        return ToStringBuilder.reflectionToString(this);
+        return JSON.toJSONString(this);
     }
 }

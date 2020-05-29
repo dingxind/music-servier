@@ -1,14 +1,16 @@
 package com.xindong.entities;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import lombok.Data;
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.Date;
 
-@Data
+@Getter
+@Setter
 public class Singer implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -28,43 +30,8 @@ public class Singer implements Serializable {
 
     private String introduction;
 
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
-
-
-    public String getPic() {
-        return pic;
-    }
-
-    public void setPic(String pic) {
-        this.pic = pic == null ? null : pic.trim();
-    }
-
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location == null ? null : location.trim();
-    }
-
-    public String getIntroduction() {
-        return introduction;
-    }
-
-    public void setIntroduction(String introduction) {
-        this.introduction = introduction == null ? null : introduction.trim();
-    }
-
     @Override
     public String toString() {
-        return ToStringBuilder.reflectionToString(this);
+        return JSON.toJSONString(this);
     }
 }

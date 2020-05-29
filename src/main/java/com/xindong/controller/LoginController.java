@@ -1,7 +1,6 @@
 package com.xindong.controller;
 
 import com.xindong.common.Result;
-import com.xindong.entities.Admin;
 import com.xindong.entities.Consumer;
 import com.xindong.service.impl.ConsumerServiceImpl;
 import io.swagger.annotations.Api;

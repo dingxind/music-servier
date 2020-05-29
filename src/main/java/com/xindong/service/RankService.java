@@ -6,5 +6,5 @@ public interface RankService {
 
     int selectAverScore(Long songListId);
 
-    boolean insert(Rank rank);
+    Integer insert(Rank rank);
 }

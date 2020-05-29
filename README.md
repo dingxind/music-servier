@@ -22,7 +22,9 @@
     
 前端：
 
-    node.js
-    vue
+    vue.js
+    Vue-router
+    Vuex
+    Axios
     
     

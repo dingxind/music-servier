@@ -1,6 +1,5 @@
 package com.xindong.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.xindong.common.Result;
 import com.xindong.entities.Rank;
 import com.xindong.service.impl.RankServiceImpl;
@@ -14,17 +13,19 @@ import org.springframework.web.bind.annotation.*;
 public class RankController {
 
     @Autowired
-    private RankServiceImpl rankService;
+    RankServiceImpl rankService;
 
     //    提交评分
     @ApiOperation("提交评分")
     @PostMapping(value = "/api/pushRank")
     public Result signup(@RequestBody Rank rank) {
-        boolean res = rankService.insert(rank);
-        if (res) {
-            return  Result.ok().code(1).msg("评价成功");
+        Integer res = rankService.insert(rank);
+        if (res == 1) {
+            return Result.ok().code(1).msg("评价成功");
+        } else if (res == 0) {
+            return Result.error().code(0).msg("评价失败");
         } else {
-            return  Result.error().code(0).msg("评价失败");
+            return Result.error().code(2).msg("您已经评价过了！");
         }
     }
 

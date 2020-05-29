@@ -1,6 +1,5 @@
 package com.xindong.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.xindong.common.Result;
 import com.xindong.entities.Singer;
 import com.xindong.service.impl.SingerServiceImpl;
